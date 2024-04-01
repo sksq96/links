@@ -59,6 +59,7 @@ def get_email_details(service, emails):
         
         with open('/Users/sksq96/Documents/github/links/client/public/links.jsonl', 'a') as f:
             link = message_body.strip().replace('Thanks,\r\nShubham', '')
+            print(link)
             f.write(json.dumps({'subject': subject, 'date': date, 'link': link}) + '\n')
             subject = ""
 
