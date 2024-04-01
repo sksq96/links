@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply max-h-screen scrollbar-hide text-base antialiased;
+  }
+
+  /* handles safari overscroll background color */
+  body:after {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -50%;
+    bottom: -50%;
+    left: -50%;
+    z-index: -1;
+    @apply bg-off-white dark:bg-off-black;
+  }
+
+  /* Grenette Font */
+  @font-face {
+    font-family: 'grenette_regular';
+    src: url('../public/grenette-regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Berkeley Font */
+  @font-face {
+    font-family: 'berkeley';
+    src: url('../public/berkeley-updated.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  /* Invert highlight colors */
+  ::selection {
+    background-color: #6366f1;
+    color: #f5f5f5;
+    filter: invert(1);
+  }
+}
+
+@layer utilities {
+  .font-grenette {
+    font-family: 'grenette_regular', 'dazzed_medium', sans-serif;
+  }
+
+  .font-berkeley {
+    font-family: 'berkeley', monospace;
+  }
+
+  /* For Webkit-based browsers (Chrome, Safari and Opera) */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* For IE, Edge and Firefox */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+}

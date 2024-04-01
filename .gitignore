@@ -1,0 +1,5 @@
+.env
+venv/
+run.sh
+scripts/credentials.json
+scripts/token.pickle
