@@ -10,7 +10,7 @@ module.exports = {
     extend: {
       colors: {
         'off-black': '#1e1e21',
-        'off-white': '#f5f2e9',
+        'off-white': '#fff8f5',
       },
     },
     screens: {
