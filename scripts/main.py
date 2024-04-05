@@ -39,6 +39,7 @@ def get_emails(service, labels):
     return emails
 
 def get_email_details(service, emails):
+    links = set()
     for email in emails:
         msg = service.users().messages().get(userId='me', id=email['id']).execute()
         payload = msg['payload']
@@ -57,7 +58,6 @@ def get_email_details(service, emails):
         else:
             message_body = base64.urlsafe_b64decode(payload['body']['data']).decode('utf-8')
         
-        links = set()
         with open('/Users/sksq96/Documents/github/links/client/public/links.jsonl', 'a') as f:
             link = message_body.strip().replace('Thanks,\r\nShubham', '')
             if link in links:
