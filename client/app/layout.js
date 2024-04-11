@@ -1,7 +1,7 @@
 import './globals.css'
 
 export const metadata = {
-  metadataBase: new URL('http://www.rsrch.space'),
+  metadataBase: new URL('https://www.shubham.lol'),
   title: 'shubham\'s internet',
   description: 'shubham\'s internet',
   openGraph: {
@@ -11,7 +11,7 @@ export const metadata = {
     images: [
       {
         url: '',
-        alt: 'rsrch.space homepage',
+        alt: 'sksq96\'s internet',
       },
     ],
   },
