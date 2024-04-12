@@ -63,7 +63,8 @@ def get_email_details(service, emails):
             if header['name'] == 'From':
                 sender = header['value']
             if header['name'] == 'Date':
-                date = header['value']
+                date_str = header['value']
+                date = pd.to_datetime(date_str)
 
         if latest_date is not None and date < latest_date:
             break
@@ -82,7 +83,7 @@ def get_email_details(service, emails):
                 continue
             links.add(link)
             print(link)
-            f.write(json.dumps({'subject': subject, 'date': date, 'link': link}) + '\n')
+            f.write(json.dumps({'subject': subject, 'date': date_str, 'link': link}) + '\n')
             subject = ""
 
 
