@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 # remove links.jsonl if you want to start fresh
-# os.system('rm /Users/sksq96/Documents/github/links/client/public/links.jsonl')
+os.system('rm /Users/sksq96/Documents/github/links/client/public/links.jsonl')
 
 def get_credentials():
     creds = None
@@ -40,13 +40,6 @@ def get_emails(service, labels):
 
 def get_email_details(service, emails):
     links = set()
-    # Load existing links from the file
-    if os.path.exists('/Users/sksq96/Documents/github/links/client/public/links.jsonl'):
-        with open('/Users/sksq96/Documents/github/links/client/public/links.jsonl', 'r') as f:
-            for line in f:
-                data = json.loads(line)
-                links.add(data['link'])
-
     for email in emails:
         msg = service.users().messages().get(userId='me', id=email['id']).execute()
         payload = msg['payload']
@@ -68,7 +61,7 @@ def get_email_details(service, emails):
         with open('/Users/sksq96/Documents/github/links/client/public/links.jsonl', 'a') as f:
             link = message_body.strip().replace('Thanks,\r\nShubham', '')
             if link in links:
-                break
+                continue
             links.add(link)
             print(link)
             f.write(json.dumps({'subject': subject, 'date': date, 'link': link}) + '\n')
