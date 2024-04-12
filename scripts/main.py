@@ -1,6 +1,8 @@
 import os, json
 import pickle
 import base64
+import pandas as pd
+from datetime import datetime
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -8,7 +10,7 @@ from googleapiclient.discovery import build
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 # remove links.jsonl if you want to start fresh
-os.system('rm /Users/sksq96/Documents/github/links/client/public/links.jsonl')
+# os.system('rm /Users/sksq96/Documents/github/links/client/public/links.jsonl')
 
 def get_credentials():
     creds = None
@@ -39,6 +41,17 @@ def get_emails(service, labels):
     return emails
 
 def get_email_details(service, emails):
+
+    latest_date = None
+    # Read the latest date from the existing links.jsonl file using pandas
+    if os.path.exists('/Users/sksq96/Documents/github/links/client/public/links.jsonl'):
+        df = pd.read_json('/Users/sksq96/Documents/github/links/client/public/links.jsonl', lines=True)
+        if not df.empty:
+            df['date'] = pd.to_datetime(df['date'])
+            latest_date = df['date'].max()
+            print('Latest date:', latest_date)
+
+
     links = set()
     for email in emails:
         msg = service.users().messages().get(userId='me', id=email['id']).execute()
@@ -51,6 +64,11 @@ def get_email_details(service, emails):
                 sender = header['value']
             if header['name'] == 'Date':
                 date = header['value']
+
+        if latest_date is not None and date < latest_date:
+            break
+
+
         if 'parts' in payload:
             for part in payload['parts']:
                 if part['mimeType'] == 'text/plain':
