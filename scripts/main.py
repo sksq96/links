@@ -61,6 +61,7 @@ def get_email_details(service, emails, links_df):
         
         link = message_body.strip().replace('Thanks,\r\nShubham', '')
         if link not in links_df['link'].values:
+            print(link)
             new_links.append({'subject': subject, 'date': date, 'link': link})
             subject = ""
 
