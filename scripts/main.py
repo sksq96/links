@@ -1,8 +1,6 @@
 import os, json
 import pickle
 import base64
-import pandas as pd
-from datetime import datetime
 from google.auth.transport.requests import Request
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -10,10 +8,7 @@ from googleapiclient.discovery import build
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 # remove links.jsonl if you want to start fresh
-JSONL = '/Users/sksq96/Documents/github/links/client/public/links.jsonl'
-# os.system(f'rm {JSONL}')
-
-
+os.system('rm /Users/sksq96/Documents/github/links/client/public/links.jsonl')
 
 def get_credentials():
     creds = None
@@ -43,8 +38,8 @@ def get_emails(service, labels):
                 emails.extend(results['messages'])
     return emails
 
-def get_email_details(service, emails, latest_date=None, subject=""):
-    results = []
+def get_email_details(service, emails):
+    links = set()
     for email in emails:
         msg = service.users().messages().get(userId='me', id=email['id']).execute()
         payload = msg['payload']
@@ -55,13 +50,7 @@ def get_email_details(service, emails, latest_date=None, subject=""):
             if header['name'] == 'From':
                 sender = header['value']
             if header['name'] == 'Date':
-                date = pd.to_datetime(header['value'])
-                # date = pd.to_datetime(date_str)
-
-        if latest_date is not None and date < latest_date:
-            break
-
-
+                date = header['value']
         if 'parts' in payload:
             for part in payload['parts']:
                 if part['mimeType'] == 'text/plain':
@@ -69,37 +58,23 @@ def get_email_details(service, emails, latest_date=None, subject=""):
         else:
             message_body = base64.urlsafe_b64decode(payload['body']['data']).decode('utf-8')
         
-        # with open('/Users/sksq96/Documents/github/links/client/public/links.jsonl', 'a') as f:
-        link = message_body.strip().replace('Thanks,\r\nShubham', '')
-        results.append({'subject': subject, 'date': date, 'link': link})
-        print(date, link)
-        subject = ""
-    
-    return results
-
+        with open('/Users/sksq96/Documents/github/links/client/public/links.jsonl', 'a') as f:
+            link = message_body.strip().replace('Thanks,\r\nShubham', '')
+            if link in links:
+                continue
+            links.add(link)
+            print(link)
+            f.write(json.dumps({'subject': subject, 'date': date, 'link': link}) + '\n')
+            subject = ""
 
 
 def main():
     creds = get_credentials()
     service = build('gmail', 'v1', credentials=creds)
 
-    df = pd.read_json(JSONL, lines=True)
-    links = set(df['link'].values)
-    df['date'] = pd.to_datetime(df['date'])
-    latest_date = df['date'].max()
-    print('Latest date:', latest_date)
-
-    emails = get_emails(service, labels=['INBOX'])
-    results = get_email_details(service, emails, latest_date=latest_date)
-
-    # cat df and results
-    df_new = pd.concat([df, pd.DataFrame(results)])
-    df_new = df_new.drop_duplicates(subset='link', keep='last')
-    df_new.sort_values('date', inplace=True, ascending=False)
-    df_new.to_json(JSONL, orient='records', lines=True)
-
-
+    labels = ['INBOX']  # Add more labels if needed
+    emails = get_emails(service, labels)
+    get_email_details(service, emails)
 
 if __name__ == '__main__':
     main()
-
