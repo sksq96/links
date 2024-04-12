@@ -94,6 +94,8 @@ def main():
 
     # cat df and results
     df_new = pd.concat([df, pd.DataFrame(results)])
+    df_new = df_new.drop_duplicates(subset='link', keep='last')
+    df_new['date'] = pd.to_datetime(df_new['date'])
     df_new.sort_values('date', inplace=True).reset_index(drop=True)
     df_new.to_json(JSONL, orient='records', lines=True)
 
