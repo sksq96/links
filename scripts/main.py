@@ -55,7 +55,6 @@ def get_email_details(service, emails, latest_date=None, subject=""):
             if header['name'] == 'From':
                 sender = header['value']
             if header['name'] == 'Date':
-                date_str = header['value']
                 date = pd.to_datetime(date_str)
 
         if latest_date is not None and date < latest_date:
@@ -71,8 +70,8 @@ def get_email_details(service, emails, latest_date=None, subject=""):
         
         # with open('/Users/sksq96/Documents/github/links/client/public/links.jsonl', 'a') as f:
         link = message_body.strip().replace('Thanks,\r\nShubham', '')
-        results.append({'subject': subject, 'date': date_str, 'link': link})
-        print(date_str, link)
+        results.append({'subject': subject, 'date': date, 'link': link})
+        print(date, link)
         subject = ""
     
     return results
@@ -95,7 +94,6 @@ def main():
     # cat df and results
     df_new = pd.concat([df, pd.DataFrame(results)])
     df_new = df_new.drop_duplicates(subset='link', keep='last')
-    df_new['date'] = pd.to_datetime(df_new['date'])
     df_new.sort_values('date', inplace=True).reset_index(drop=True)
     df_new.to_json(JSONL, orient='records', lines=True)
 
