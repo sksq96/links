@@ -95,10 +95,10 @@ def main():
     # cat df and results
     df_new = pd.concat([df, pd.DataFrame(results)])
     df_new = df_new.drop_duplicates(subset='link', keep='last')
-    df_new.sort_values('date', inplace=True)
+    df_new.sort_values('date', inplace=True, ascending=False)
     df_new.to_json(JSONL, orient='records', lines=True)
 
-    
+
 
 if __name__ == '__main__':
     main()
