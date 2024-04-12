@@ -89,6 +89,7 @@ def main():
 
     labels = ['INBOX']  # Add more labels if needed
     emails = get_emails(service, labels, latest_date)
+    print(len(emails)
     links_df = get_email_details(service, emails, links_df)
 
 if __name__ == '__main__':
