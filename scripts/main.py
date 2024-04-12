@@ -93,7 +93,7 @@ def main():
     results = get_email_details(service, emails, latest_date=latest_date)
 
     # cat df and results
-    df_new = pd.cat(df, results)
+    df_new = pd.concat([df, pd.DataFrame(results)])
     df_new.sort_values('date', inplace=True).reset_index(drop=True)
     df_new.to_json(JSONL, orient='records', lines=True)
 
