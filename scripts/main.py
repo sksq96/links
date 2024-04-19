@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 # If modifying these scopes, delete the file token.pickle.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 # remove links.jsonl if you want to start fresh
-os.system('rm /Users/sksq96/Documents/github/links/client/public/links.jsonl')
+os.system('rm /Users/shubham.chandel/Documents/github/links/client/public/links.jsonl')
 
 
 def get_credentials():
@@ -59,7 +59,7 @@ def get_email_details(service, emails):
         else:
             message_body = base64.urlsafe_b64decode(payload['body']['data']).decode('utf-8')
         
-        with open('/Users/sksq96/Documents/github/links/client/public/links.jsonl', 'a') as f:
+        with open('/Users/shubham.chandel/Documents/github/links/client/public/links.jsonl', 'a') as f:
             link = message_body.strip().replace('Thanks,\r\nShubham', '')
             if link in links:
                 continue
