@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import debounce from 'lodash/debounce';
 
 function Entry({ title, created, link }) {
   const dateObj = new Date(created);
