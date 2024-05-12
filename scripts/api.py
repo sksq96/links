@@ -4,9 +4,9 @@ import numpy as np
 
 
 from flask import Flask, request, jsonify
-from flask_cors import CORS
-app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+# from flask_cors import CORS
+# app = Flask(__name__)
+# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
 import cohere
 co = cohere.Client("xDp0VXO6GeYZp9DxDcP0oncnHNtNALyHxeeZmYE9")
