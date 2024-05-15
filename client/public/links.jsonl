@@ -1,3 +1,20 @@
+{"subject": "GPT in 60 Lines of NumPy | Jay Mody", "date": "Wed, 15 May 2024 02:50:56 -0400", "link": "https://jaykmody.com/blog/gpt-from-scratch/"}
+{"subject": "On Learning JAX \u2013 A Framework for High Performance Machine Learning | Alex McKinney", "date": "Wed, 15 May 2024 02:31:03 -0400", "link": "https://afmck.in/posts/2023-05-22-jax-post/"}
+{"subject": "Watch \"Implementing DietNeRF with JAX and Flax\" on YouTube", "date": "Wed, 15 May 2024 02:24:37 -0400", "link": "https://www.youtube.com/live/A9iefUXkvQU?si=Npi_27wyNZ1amO-w"}
+{"subject": "Overview \u2014 UvA DL Notebooks v1.2 documentation", "date": "Wed, 15 May 2024 02:23:50 -0400", "link": "https://uvadlc-notebooks.readthedocs.io/en/latest/tutorial_notebooks/scaling/JAX/overview.html"}
+{"subject": "jax/docs/autodidax.ipynb / learn", "date": "Wed, 15 May 2024 02:23:01 -0400", "link": "https://github.com/google/jax/blob/0b88b0ea9b250c3dc908d30ebd22478d0cd5b08b/docs/autodidax.ipynb"}
+{"subject": "Watch \"JAX Streams\" on YouTube", "date": "Wed, 15 May 2024 02:22:17 -0400", "link": "https://youtube.com/playlist?list=PLRdIVVFw61XvJWMMWYQ3A2e9YX4zJxi1_&si=bHIukp5jMjoS8Thk"}
+{"subject": "Watch \"JAX Meetup: Scalable second order optimization for deep learning [ft. Rohan Anil]\" on YouTube", "date": "Wed, 15 May 2024 02:22:00 -0400", "link": "https://www.youtube.com/live/YDL8NXlS8hA?si=rkIr8gFdWftU6hYs"}
+{"subject": "Watch \"JAX Streams: Getting Started with Flax | EP2\" on YouTube", "date": "Wed, 15 May 2024 02:21:45 -0400", "link": "https://www.youtube.com/live/TCOzITq3WNs?si=BDDFVgP2p238kaFM"}
+{"subject": "Watch \"JAX Talk: Generating Extremely Long Sequences with S4\" on YouTube", "date": "Wed, 15 May 2024 02:10:58 -0400", "link": "https://www.youtube.com/live/GqwhkbrWDOI?si=wnMGyeIlk61pSAvU"}
+{"subject": "Processing 2 Billion Images for Stable Diffusion Model Training - Definitive Guides with Ray Series", "date": "Wed, 15 May 2024 01:57:04 -0400", "link": "https://www.anyscale.com/blog/processing-2-billion-images-for-stable-diffusion-model-training-definitive-guides-with-ray-series"}
+{"subject": "Optimizing data ingestion infrastructure to support more AI models", "date": "Wed, 15 May 2024 01:56:27 -0400", "link": "https://engineering.fb.com/2022/09/19/ml-applications/data-ingestion-machine-learning-training-meta/"}
+{"subject": "0nutation/SpeechGPT: SpeechGPT Series: Speech Large Language Models", "date": "Wed, 15 May 2024 00:57:03 -0400", "link": "https://github.com/0nutation/SpeechGPT"}
+{"subject": "[2405.05904] Does Fine-Tuning LLMs on New Knowledge Encourage Hallucinations?", "date": "Wed, 15 May 2024 00:55:17 -0400", "link": "https://arxiv.org/abs/2405.05904"}
+{"subject": "The Platonic Representation Hypothesis", "date": "Wed, 15 May 2024 00:35:04 -0400", "link": "https://phillipi.github.io/prh/"}
+{"subject": "LABS.GOOGLE", "date": "Wed, 15 May 2024 00:32:09 -0400", "link": "https://labs.google/"}
+{"subject": "GPUs Go Brrr \u00b7 Hazy Research", "date": "Wed, 15 May 2024 00:28:53 -0400", "link": "https://hazyresearch.stanford.edu/blog/2024-05-12-tk"}
+{"subject": "finetune_paligemma.ipynb - Colab", "date": "Tue, 14 May 2024 17:58:21 -0400", "link": "https://colab.research.google.com/github/google-research/big_vision/blob/main/big_vision/configs/proj/paligemma/finetune_paligemma.ipynb"}
 {"subject": "Grand-master Level Chess without Search / yoav", "date": "Mon, 13 May 2024 22:42:16 -0400", "link": "https://gist.github.com/yoavg/8b98bbd70eb187cf1852b3485b8cda4f#user-content-fnref-3-b6ec0872d32c5df9324eccad8269953b"}
 {"subject": "thevoicecompany/gazelle-train: Joint speech-language model - respond directly to audio!", "date": "Mon, 13 May 2024 20:49:35 -0400", "link": "https://github.com/thevoicecompany/gazelle-train"}
 {"subject": "a review on protein language models", "date": "Mon, 13 May 2024 11:58:33 -0400", "link": "https://www.apoorva-srinivasan.com/plms/"}
