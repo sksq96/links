@@ -62,6 +62,7 @@ def get_email_details(service, emails):
         with open('/Users/shubham.chandel/Documents/github/links/client/public/links.jsonl', 'a') as f:
             link = message_body.strip().replace('Thanks,\r\nShubham', '')
             link = link.split("\n")[0].strip()
+            link = link.replace("<", "").replace(">", "")
             if link in links:
                 continue
             links.add(link)

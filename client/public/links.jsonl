@@ -1,68 +1,74 @@
+{"subject": "Writings", "date": "Thu, 11 Jul 2024 21:20:36 +0000", "link": "https://dmvaldman.github.io/schizorationality.html"}
+{"subject": "Reasoning through arguments against taking AI safety seriously - Yoshua Bengio", "date": "Thu, 11 Jul 2024 16:49:54 +0000", "link": "https://yoshuabengio.org/2024/07/09/reasoning-through-arguments-"}
+{"subject": "giving out titles in an early stage company", "date": "Thu, 11 Jul 2024 16:26:08 +0000", "link": "https://x.com/dsiroker/status/1811383707116109866?s=12"}
+{"subject": "tweet things about cancer", "date": "Thu, 11 Jul 2024 16:23:21 +0000", "link": "https://x.com/adastroworld/status/1811254318739103886?s=12"}
+{"subject": "DRAGON: Alex Carnevale / The 100 Greatest Novels", "date": "Wed, 10 Jul 2024 19:32:17 +0000", "link": "http://losarciniegas.blogspot.com/2013/07/alex-carnevale-100-greatest-"}
+{"subject": "kyo-takano/chinchilla: A toolkit for scaling law research \u2696", "date": "Wed, 10 Jul 2024 13:47:42 -0400", "link": "https://github.com/kyo-takano/chinchilla/tree/master"}
 {"subject": "TikTok Learnings", "date": "Wed, 10 Jul 2024 04:03:26 -0400", "link": "https://exaai.notion.site/TikTok-Learnings-3b7cca4cc0a9432bb103ee1a7e8c3cec"}
-{"subject": "[2402.10890] When is Tree Search Useful for LLM Planning? It Depends on the Discriminator", "date": "Wed, 10 Jul 2024 05:37:00 +0000", "link": "<https://arxiv.org/abs/2402.10890>"}
-{"subject": "Slice Sampling", "date": "Wed, 10 Jul 2024 05:36:39 +0000", "link": "<https://thatnerd2.github.io/technical/slicesampl.html>"}
-{"subject": "Rejection Sampling", "date": "Wed, 10 Jul 2024 05:36:33 +0000", "link": "<https://thatnerd2.github.io/technical/rej.html>"}
-{"subject": "Sampling: Two Basic Algorithms", "date": "Wed, 10 Jul 2024 05:36:24 +0000", "link": "<https://gregorygundersen.com/blog/2019/09/01/sampling/>"}
-{"subject": "GitHub - facebookresearch/MobileLLM: MobileLLM Optimizing Sub-billion Parameter Language Models for On-Device Use Cases. In ICML 2024.", "date": "Wed, 10 Jul 2024 05:30:24 +0000", "link": "<https://github.com/facebookresearch/MobileLLM>"}
-{"subject": "Understanding Large Language Models: Foundations and Safety - YouTube", "date": "Wed, 10 Jul 2024 05:21:41 +0000", "link": "<https://www.youtube.com/playlist?list=PLJ66BAXN6D8H_gRQJGjmbnS5qCWoxJNfe>"}
-{"subject": "The Valley of Code / html", "date": "Tue, 09 Jul 2024 22:16:15 +0000", "link": "<https://thevalleyofcode.com/>"}
+{"subject": "[2402.10890] When is Tree Search Useful for LLM Planning? It Depends on the Discriminator", "date": "Wed, 10 Jul 2024 05:37:00 +0000", "link": "https://arxiv.org/abs/2402.10890"}
+{"subject": "Slice Sampling", "date": "Wed, 10 Jul 2024 05:36:39 +0000", "link": "https://thatnerd2.github.io/technical/slicesampl.html"}
+{"subject": "Rejection Sampling", "date": "Wed, 10 Jul 2024 05:36:33 +0000", "link": "https://thatnerd2.github.io/technical/rej.html"}
+{"subject": "Sampling: Two Basic Algorithms", "date": "Wed, 10 Jul 2024 05:36:24 +0000", "link": "https://gregorygundersen.com/blog/2019/09/01/sampling/"}
+{"subject": "GitHub - facebookresearch/MobileLLM: MobileLLM Optimizing Sub-billion Parameter Language Models for On-Device Use Cases. In ICML 2024.", "date": "Wed, 10 Jul 2024 05:30:24 +0000", "link": "https://github.com/facebookresearch/MobileLLM"}
+{"subject": "Understanding Large Language Models: Foundations and Safety - YouTube", "date": "Wed, 10 Jul 2024 05:21:41 +0000", "link": "https://www.youtube.com/playlist?list=PLJ66BAXN6D8H_gRQJGjmbnS5qCWoxJNfe"}
+{"subject": "The Valley of Code / html", "date": "Tue, 09 Jul 2024 22:16:15 +0000", "link": "https://thevalleyofcode.com/"}
 {"subject": "[2407.04620] Learning to (Learn at Test Time): RNNs with Expressive Hidden States", "date": "Tue, 9 Jul 2024 11:11:02 -0400", "link": "https://arxiv.org/abs/2407.04620"}
 {"subject": "Tutorials on Tinygrad | tinygrad-notes", "date": "Tue, 9 Jul 2024 11:08:50 -0400", "link": "https://mesozoic-egg.github.io/tinygrad-notes/"}
-{"subject": "GitHub - kvfrans/jax-vqvae-vqgan: JAX implementation of VQVAE/VQGAN autoencoders (+FSQ)", "date": "Mon, 08 Jul 2024 22:52:44 +0000", "link": "<https://github.com/kvfrans/jax-vqvae-vqgan>"}
-{"subject": "GitHub - kvfrans/rlbase_stable / rl jax", "date": "Mon, 08 Jul 2024 22:46:48 +0000", "link": "<https://github.com/kvfrans/rlbase_stable>"}
-{"subject": "torch.compile, the missing manual", "date": "Mon, 08 Jul 2024 12:39:58 +0000", "link": "<https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/mobilebasic#heading=h.66t0x3z84jio>"}
-{"subject": "Personality Basins | near.blog", "date": "Mon, 08 Jul 2024 00:36:07 +0000", "link": "<https://near.blog/personality-basins/>"}
-{"subject": "[2402.14905] MobileLLM: Optimizing Sub-billion Parameter Language Models for On-Device Use Cases", "date": "Sun, 07 Jul 2024 00:19:53 +0000", "link": "<https://arxiv.org/abs/2402.14905>"}
-{"subject": "CUDA Course V2", "date": "Sat, 06 Jul 2024 23:58:56 +0000", "link": "<https://towering-ceiling-594.notion.site/CUDA-Course-V2-"}
-{"subject": "lo-cafe | NotchNook", "date": "Sat, 06 Jul 2024 05:17:01 +0000", "link": "<https://lo.cafe/notchnook>"}
-{"subject": "improving stability of large model training", "date": "Sat, 06 Jul 2024 04:11:41 +0000", "link": "<https://x.com/iscienceluvr/status/1809402112834695301?s=12>"}
+{"subject": "GitHub - kvfrans/jax-vqvae-vqgan: JAX implementation of VQVAE/VQGAN autoencoders (+FSQ)", "date": "Mon, 08 Jul 2024 22:52:44 +0000", "link": "https://github.com/kvfrans/jax-vqvae-vqgan"}
+{"subject": "GitHub - kvfrans/rlbase_stable / rl jax", "date": "Mon, 08 Jul 2024 22:46:48 +0000", "link": "https://github.com/kvfrans/rlbase_stable"}
+{"subject": "torch.compile, the missing manual", "date": "Mon, 08 Jul 2024 12:39:58 +0000", "link": "https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/mobilebasic#heading=h.66t0x3z84jio"}
+{"subject": "Personality Basins | near.blog", "date": "Mon, 08 Jul 2024 00:36:07 +0000", "link": "https://near.blog/personality-basins/"}
+{"subject": "[2402.14905] MobileLLM: Optimizing Sub-billion Parameter Language Models for On-Device Use Cases", "date": "Sun, 07 Jul 2024 00:19:53 +0000", "link": "https://arxiv.org/abs/2402.14905"}
+{"subject": "CUDA Course V2", "date": "Sat, 06 Jul 2024 23:58:56 +0000", "link": "https://towering-ceiling-594.notion.site/CUDA-Course-V2-"}
+{"subject": "lo-cafe | NotchNook", "date": "Sat, 06 Jul 2024 05:17:01 +0000", "link": "https://lo.cafe/notchnook"}
+{"subject": "improving stability of large model training", "date": "Sat, 06 Jul 2024 04:11:41 +0000", "link": "https://x.com/iscienceluvr/status/1809402112834695301?s=12"}
 {"subject": "Contextual Position Encoding (CoPE)", "date": "Fri, 5 Jul 2024 21:57:28 -0400", "link": "https://twitter.com/jaseweston/status/1795978611784089799"}
-{"subject": "Successful language model evals \u2014 Jason Wei", "date": "Fri, 05 Jul 2024 22:11:40 +0000", "link": "<https://www.jasonwei.net/blog/evals>"}
-{"subject": "favorite regulation practices", "date": "Fri, 05 Jul 2024 21:14:00 +0000", "link": "<https://x.com/kellycwilde/status/1809244687867183169?s=12>"}
-{"subject": "In the beginning there was sensation / language", "date": "Fri, 05 Jul 2024 14:47:19 +0000", "link": "<https://x.com/johnsonmxe/status/1751994506478587977?s=12>"}
-{"subject": "A friendly introduction to Principal Component Analysis | peterbloem.nl", "date": "Fri, 05 Jul 2024 14:31:36 +0000", "link": "<https://peterbloem.nl/blog/pca>"}
-{"subject": "implementing your own ZeRO distributed optimizer", "date": "Fri, 05 Jul 2024 11:17:43 +0000", "link": "<https://x.com/cloneofsimo/status/1809169769977016501?s=12>"}
+{"subject": "Successful language model evals \u2014 Jason Wei", "date": "Fri, 05 Jul 2024 22:11:40 +0000", "link": "https://www.jasonwei.net/blog/evals"}
+{"subject": "favorite regulation practices", "date": "Fri, 05 Jul 2024 21:14:00 +0000", "link": "https://x.com/kellycwilde/status/1809244687867183169?s=12"}
+{"subject": "In the beginning there was sensation / language", "date": "Fri, 05 Jul 2024 14:47:19 +0000", "link": "https://x.com/johnsonmxe/status/1751994506478587977?s=12"}
+{"subject": "A friendly introduction to Principal Component Analysis | peterbloem.nl", "date": "Fri, 05 Jul 2024 14:31:36 +0000", "link": "https://peterbloem.nl/blog/pca"}
+{"subject": "implementing your own ZeRO distributed optimizer", "date": "Fri, 05 Jul 2024 11:17:43 +0000", "link": "https://x.com/cloneofsimo/status/1809169769977016501?s=12"}
 {"subject": "Watch \"Andrej Karpathy's Keynote & Winner Pitches at UC Berkeley AI Hackathon 2024 Awards Ceremony\" on YouTube", "date": "Thu, 4 Jul 2024 01:06:37 -0400", "link": "https://youtu.be/tsTeEkzO9xc?si=t1DxYrTW4PNdpPy3"}
 {"subject": "Watch \"Here's What Ethical AI Really Means\" on YouTube", "date": "Thu, 4 Jul 2024 01:06:19 -0400", "link": "https://youtu.be/AaU6tI2pb3M?si=4vubfChMvD4t6qrb"}
 {"subject": "Stream Entry / Fetters 1-3 -- Guidance Doc v2.0 - Google Docs", "date": "Wed, 3 Jul 2024 16:59:38 -0400", "link": "https://docs.google.com/document/d/10xbIFJWdKNU-t1CmKdhyqafcEo7VQbXT7vFUD9jneks/edit"}
 {"subject": "torch.compile, the missing manual - Google Docs", "date": "Wed, 3 Jul 2024 16:52:13 -0400", "link": "https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/edit#heading=h.ivdr7fmrbeab"}
-{"subject": "\ud835\udc12\ud835\udc1e\ud835\udc26\ud835\udc1a\ud835\udc27\ud835\udc2d\ud835\udc22\ud835\udc1c \ud835\udc12\ud835\udc1e\ud835\udc1a\ud835\udc2b\ud835\udc1c\ud835\udc21 \ud835\udc28\ud835\udc27 \ud835\udfcf\ud835\udfce\ud835\udfce\ud835\udc0c \ud835\udc1d\ud835\udc28\ud835\udc1c\ud835\udc2c - \ud835\udc16\ud835\udc22\ud835\udc2d\ud835\udc21 \ud835\udfcf\ud835\udfce\ud835\udfce\ud835\udc0c\ud835\udc01 \ud835\udc28\ud835\udc1f \ud835\udc0c\ud835\udc1e\ud835\udc26\ud835\udc28\ud835\udc2b\ud835\udc32", "date": "Wed, 03 Jul 2024 15:49:35 +0000", "link": "<https://x.com/nils_reimers/status/1808484745354875140?s=12>"}
+{"subject": "\ud835\udc12\ud835\udc1e\ud835\udc26\ud835\udc1a\ud835\udc27\ud835\udc2d\ud835\udc22\ud835\udc1c \ud835\udc12\ud835\udc1e\ud835\udc1a\ud835\udc2b\ud835\udc1c\ud835\udc21 \ud835\udc28\ud835\udc27 \ud835\udfcf\ud835\udfce\ud835\udfce\ud835\udc0c \ud835\udc1d\ud835\udc28\ud835\udc1c\ud835\udc2c - \ud835\udc16\ud835\udc22\ud835\udc2d\ud835\udc21 \ud835\udfcf\ud835\udfce\ud835\udfce\ud835\udc0c\ud835\udc01 \ud835\udc28\ud835\udc1f \ud835\udc0c\ud835\udc1e\ud835\udc26\ud835\udc28\ud835\udc2b\ud835\udc32", "date": "Wed, 03 Jul 2024 15:49:35 +0000", "link": "https://x.com/nils_reimers/status/1808484745354875140?s=12"}
 {"subject": "Watch \"Simple Diffusion Language Models\" on YouTube", "date": "Wed, 3 Jul 2024 11:34:54 -0400", "link": "https://youtu.be/WjAUX23vgfg?si=dBx-EeYl8UgUt2PI"}
-{"subject": "Open-Science AI LAB - Kyutai - YouTube / audiollm", "date": "Wed, 03 Jul 2024 13:19:50 +0000", "link": "<https://www.youtube.com/watch?v=hm2IJSKcYvo>"}
-{"subject": "Recommended reading on the psychological/archetypal theme of rebirth?", "date": "Wed, 03 Jul 2024 01:52:47 +0000", "link": "<https://x.com/rcarhartharris/status/1808257437914341811?s=12>"}
-{"subject": "Back to Basics for RAG w/ Jo Bergum - YouTube", "date": "Tue, 02 Jul 2024 23:11:26 +0000", "link": "<https://www.youtube.com/watch?v=nc0BupOkrhI>"}
-{"subject": "The parable of the parser .pdf - Google Drive", "date": "Tue, 02 Jul 2024 23:07:58 +0000", "link": "<https://drive.google.com/file/d/1VodGljuEhBKwZIXQwN-ApH6g2wBAVAdK/view>"}
+{"subject": "Open-Science AI LAB - Kyutai - YouTube / audiollm", "date": "Wed, 03 Jul 2024 13:19:50 +0000", "link": "https://www.youtube.com/watch?v=hm2IJSKcYvo"}
+{"subject": "Recommended reading on the psychological/archetypal theme of rebirth?", "date": "Wed, 03 Jul 2024 01:52:47 +0000", "link": "https://x.com/rcarhartharris/status/1808257437914341811?s=12"}
+{"subject": "Back to Basics for RAG w/ Jo Bergum - YouTube", "date": "Tue, 02 Jul 2024 23:11:26 +0000", "link": "https://www.youtube.com/watch?v=nc0BupOkrhI"}
+{"subject": "The parable of the parser .pdf - Google Drive", "date": "Tue, 02 Jul 2024 23:07:58 +0000", "link": "https://drive.google.com/file/d/1VodGljuEhBKwZIXQwN-ApH6g2wBAVAdK/view"}
 {"subject": "Tutorial #4: auxiliary tasks in deep reinforcement learning - Borealis AI", "date": "Tue, 2 Jul 2024 16:30:10 -0400", "link": "https://www.borealisai.com/research-blogs/tutorial-4-auxiliary-tasks-deep-reinforcement-learning/#Defining_a_good_auxiliary_task"}
-{"subject": "GitHub - minii-ai/vqvaes: Training VQ-VAE, VQ-VAE 2, and VQ-GAN", "date": "Tue, 02 Jul 2024 17:47:48 +0000", "link": "<https://github.com/minii-ai/vqvaes>"}
-{"subject": "ONCE \u2014 Writebook", "date": "Tue, 02 Jul 2024 17:41:25 +0000", "link": "<https://once.com/writebook>"}
-{"subject": "Building a Rakis", "date": "Tue, 02 Jul 2024 15:24:45 +0000", "link": "<https://olickel.com/introducing-rakis>"}
-{"subject": "A landscape of consciousness: Toward a taxonomy of explanations and implications - ScienceDirect", "date": "Tue, 02 Jul 2024 14:52:17 +0000", "link": "<https://www.sciencedirect.com/science/article/pii/S0079610723001128>"}
-{"subject": "Evo: DNA foundation modeling from molecular to genome scale | Arc Institute", "date": "Tue, 02 Jul 2024 14:22:05 +0000", "link": "<https://arcinstitute.org/news/blog/evo>"}
+{"subject": "GitHub - minii-ai/vqvaes: Training VQ-VAE, VQ-VAE 2, and VQ-GAN", "date": "Tue, 02 Jul 2024 17:47:48 +0000", "link": "https://github.com/minii-ai/vqvaes"}
+{"subject": "ONCE \u2014 Writebook", "date": "Tue, 02 Jul 2024 17:41:25 +0000", "link": "https://once.com/writebook"}
+{"subject": "Building a Rakis", "date": "Tue, 02 Jul 2024 15:24:45 +0000", "link": "https://olickel.com/introducing-rakis"}
+{"subject": "A landscape of consciousness: Toward a taxonomy of explanations and implications - ScienceDirect", "date": "Tue, 02 Jul 2024 14:52:17 +0000", "link": "https://www.sciencedirect.com/science/article/pii/S0079610723001128"}
+{"subject": "Evo: DNA foundation modeling from molecular to genome scale | Arc Institute", "date": "Tue, 02 Jul 2024 14:22:05 +0000", "link": "https://arcinstitute.org/news/blog/evo"}
 {"subject": "A primer on GFP and esmGFP - by Abhishaike Mahajan", "date": "Tue, 2 Jul 2024 00:09:44 -0400", "link": "https://www.abhishaike.com/p/a-primer-on-gfp-and-esmgfp"}
 {"subject": "Official PyTorch Documentary: Powering the AI Revolution - YouTube", "date": "Tue, 2 Jul 2024 00:06:24 -0400", "link": "https://www.youtube.com/watch?v=rgP_LBtaUEc"}
-{"subject": "Exorcising us of the Primer | Andy Matuschak", "date": "Mon, 01 Jul 2024 22:28:23 +0000", "link": "<https://andymatuschak.org/primer/>"}
-{"subject": "notes on TinyGrad", "date": "Mon, 01 Jul 2024 21:54:09 +0000", "link": "<https://x.com/awnihannun/status/1807834514372415898?s=12>"}
-{"subject": "Image retrieval app using Apple\u2019s 4M-21 any-to-any vision model", "date": "Mon, 01 Jul 2024 17:43:46 +0000", "link": "<https://amaarora.github.io/posts/2024-06-28%20ml-4M.html>"}
-{"subject": "[2406.16678] Segment Any Text: A Universal Approach for Robust, Efficient and Adaptable Sentence Segmentation", "date": "Mon, 01 Jul 2024 17:38:13 +0000", "link": "<https://arxiv.org/abs/2406.16678>"}
+{"subject": "Exorcising us of the Primer | Andy Matuschak", "date": "Mon, 01 Jul 2024 22:28:23 +0000", "link": "https://andymatuschak.org/primer/"}
+{"subject": "notes on TinyGrad", "date": "Mon, 01 Jul 2024 21:54:09 +0000", "link": "https://x.com/awnihannun/status/1807834514372415898?s=12"}
+{"subject": "Image retrieval app using Apple\u2019s 4M-21 any-to-any vision model", "date": "Mon, 01 Jul 2024 17:43:46 +0000", "link": "https://amaarora.github.io/posts/2024-06-28%20ml-4M.html"}
+{"subject": "[2406.16678] Segment Any Text: A Universal Approach for Robust, Efficient and Adaptable Sentence Segmentation", "date": "Mon, 01 Jul 2024 17:38:13 +0000", "link": "https://arxiv.org/abs/2406.16678"}
 {"subject": "https://www.henrikkarlsson.xyz/p/interesting-ideas", "date": "Mon, 01 Jul 2024 14:07:41 +0000", "link": "https://www.henrikkarlsson.xyz/p/interesting-ideas"}
-{"subject": "demos from the Open Source AGI Hackathon", "date": "Mon, 01 Jul 2024 13:38:02 +0000", "link": "<https://x.com/alexreibman/status/1807632575017685112?s=12>"}
-{"subject": "Ilya Sutskever launches 'Safe Superintelligence', a new startup to race for AGI by scaling LLMs : r/mlscaling", "date": "Mon, 01 Jul 2024 13:26:51 +0000", "link": "<https://www.reddit.com/r/mlscaling/comments/1djoqjh/comment/l9uogp9/>"}
-{"subject": "Strategic Altruism: The Machiavellian Roots of Human Kindness", "date": "Mon, 01 Jul 2024 13:18:58 +0000", "link": "<https://www.conspicuouscognition.com/p/strategic-altruism-the-"}
-{"subject": "A Primer on MDMA and \u201cNeurotoxicity\u201d | by Arthur Juliani | Jun, 2024 | Medium", "date": "Mon, 01 Jul 2024 13:10:32 +0000", "link": "<https://awjuliani.medium.com/a-primer-on-mdma-and-neurotoxicity-"}
-{"subject": "Dario Amodei - CEO of Anthropic | Podcast | In Good Company | Norges Bank Investment Management - YouTube", "date": "Mon, 01 Jul 2024 12:52:36 +0000", "link": "<https://www.youtube.com/watch?v=xm6jNMSFT7g>"}
-{"subject": "Honest Government Ad | AI - YouTube", "date": "Mon, 01 Jul 2024 12:50:55 +0000", "link": "<https://www.youtube.com/watch?v=TtVJ4JDM7eM>"}
-{"subject": "How does Exa serve billion-scale vector search?", "date": "Mon, 01 Jul 2024 12:49:29 +0000", "link": "<https://x.com/exaailabs/status/1806444570210934949?s=12>"}
-{"subject": "Creating our Own Kubernetes & Docker to Run Our Data Infrastructure | Modal - YouTube", "date": "Mon, 01 Jul 2024 12:46:34 +0000", "link": "<https://www.youtube.com/watch?v=3jJ1GhGkLY0>"}
-{"subject": "lm open ideas", "date": "Sun, 30 Jun 2024 21:13:47 +0000", "link": "<https://x.com/cloneofsimo/status/1807461666957013120?s=12>"}
-{"subject": "visakanv bingo card", "date": "Sun, 30 Jun 2024 19:34:31 +0000", "link": "<https://x.com/visakanv/status/1528410609112346624?s=12>"}
+{"subject": "demos from the Open Source AGI Hackathon", "date": "Mon, 01 Jul 2024 13:38:02 +0000", "link": "https://x.com/alexreibman/status/1807632575017685112?s=12"}
+{"subject": "Ilya Sutskever launches 'Safe Superintelligence', a new startup to race for AGI by scaling LLMs : r/mlscaling", "date": "Mon, 01 Jul 2024 13:26:51 +0000", "link": "https://www.reddit.com/r/mlscaling/comments/1djoqjh/comment/l9uogp9/"}
+{"subject": "Strategic Altruism: The Machiavellian Roots of Human Kindness", "date": "Mon, 01 Jul 2024 13:18:58 +0000", "link": "https://www.conspicuouscognition.com/p/strategic-altruism-the-"}
+{"subject": "A Primer on MDMA and \u201cNeurotoxicity\u201d | by Arthur Juliani | Jun, 2024 | Medium", "date": "Mon, 01 Jul 2024 13:10:32 +0000", "link": "https://awjuliani.medium.com/a-primer-on-mdma-and-neurotoxicity-"}
+{"subject": "Dario Amodei - CEO of Anthropic | Podcast | In Good Company | Norges Bank Investment Management - YouTube", "date": "Mon, 01 Jul 2024 12:52:36 +0000", "link": "https://www.youtube.com/watch?v=xm6jNMSFT7g"}
+{"subject": "Honest Government Ad | AI - YouTube", "date": "Mon, 01 Jul 2024 12:50:55 +0000", "link": "https://www.youtube.com/watch?v=TtVJ4JDM7eM"}
+{"subject": "How does Exa serve billion-scale vector search?", "date": "Mon, 01 Jul 2024 12:49:29 +0000", "link": "https://x.com/exaailabs/status/1806444570210934949?s=12"}
+{"subject": "Creating our Own Kubernetes & Docker to Run Our Data Infrastructure | Modal - YouTube", "date": "Mon, 01 Jul 2024 12:46:34 +0000", "link": "https://www.youtube.com/watch?v=3jJ1GhGkLY0"}
+{"subject": "lm open ideas", "date": "Sun, 30 Jun 2024 21:13:47 +0000", "link": "https://x.com/cloneofsimo/status/1807461666957013120?s=12"}
+{"subject": "visakanv bingo card", "date": "Sun, 30 Jun 2024 19:34:31 +0000", "link": "https://x.com/visakanv/status/1528410609112346624?s=12"}
 {"subject": "Watch \"How Intense Emotions Can Be No Problem - SHINZEN YOUNG\" on YouTube", "date": "Sun, 30 Jun 2024 00:24:14 -0400", "link": "https://youtu.be/lD1ny_Q8sKo?si=gowXMgl6-azVcOJS"}
-{"subject": "[2406.19292] From Artificial Needles to Real Haystacks: Improving Retrieval Capabilities in LLMs by Finetuning on Synthetic Data", "date": "Sun, 30 Jun 2024 00:04:49 +0000", "link": "<https://arxiv.org/abs/2406.19292>"}
+{"subject": "[2406.19292] From Artificial Needles to Real Haystacks: Improving Retrieval Capabilities in LLMs by Finetuning on Synthetic Data", "date": "Sun, 30 Jun 2024 00:04:49 +0000", "link": "https://arxiv.org/abs/2406.19292"}
 {"subject": "Watch \"Config 2024: Defining the relationship (between humans and AI) (Sam Whitmore & Jason Yuan)\" on YouTube", "date": "Sat, 29 Jun 2024 17:02:45 -0400", "link": "https://youtu.be/xwGm957Dzss?si=QQcnkjNNFzCxp5Wt"}
 {"subject": "\"Jeff Shore -- What does it really mean to die in Zazen?\" on YouTube", "date": "Sat, 29 Jun 2024 16:35:28 -0400", "link": "https://youtu.be/uTU_kGyJfjU?si=HcO3CrvHYPf0UvFW"}
 {"subject": "vibecamp 3 & me", "date": "Sat, 29 Jun 2024 13:13:54 -0400", "link": "https://www.booritney.com/writing/vibecamp"}
-{"subject": "estimating how much VRAM I'll need to train the model", "date": "Sat, 29 Jun 2024 16:25:03 +0000", "link": "<https://x.com/skalskip92/status/1806293661014958330?s=12>"}
-{"subject": "managing/debugging GPU vRAM, w/an example of optimizing torch-tune", "date": "Sat, 29 Jun 2024 15:46:55 +0000", "link": "<https://x.com/hamelhusain/status/1800315287574847701?s=12>"}
-{"subject": "Transformer Math 101 | EleutherAI Blog", "date": "Sat, 29 Jun 2024 15:40:47 +0000", "link": "<https://blog.eleuther.ai/transformer-math/>"}
+{"subject": "estimating how much VRAM I'll need to train the model", "date": "Sat, 29 Jun 2024 16:25:03 +0000", "link": "https://x.com/skalskip92/status/1806293661014958330?s=12"}
+{"subject": "managing/debugging GPU vRAM, w/an example of optimizing torch-tune", "date": "Sat, 29 Jun 2024 15:46:55 +0000", "link": "https://x.com/hamelhusain/status/1800315287574847701?s=12"}
+{"subject": "Transformer Math 101 | EleutherAI Blog", "date": "Sat, 29 Jun 2024 15:40:47 +0000", "link": "https://blog.eleuther.ai/transformer-math/"}
 {"subject": "conversation_1719396609_scenario_backrooms-3-5.txt \u2022 infinite backrooms", "date": "Sat, 29 Jun 2024 01:06:13 -0400", "link": "https://dreams-of-an-electric-mind.webflow.io/dreams/conversation-1719396609-scenario-backrooms-3-5-txt"}
 {"subject": "MoEs and PyTorch distributed", "date": "Thu, 27 Jun 2024 15:24:42 -0400", "link": "https://x.com/mvpatel2000/status/1806391255297147218?t=Mcql2Cmp7OdvHEgbwi-W4Q&s=19"}
 {"subject": "Knowledge distillation: A good teacher is patient and consistent", "date": "Thu, 27 Jun 2024 15:23:29 -0400", "link": "https://x.com/giffmana/status/1402836863954599936?t=vSFaoCHDjM-MxSqIka9cfQ&s=19"}
@@ -502,7 +508,6 @@
 {"subject": "The Coming Technological Singularity", "date": "Thu, 4 Apr 2024 03:01:40 -0700", "link": "https://edoras.sdsu.edu/~vinge/misc/singularity.html"}
 {"subject": "Throughput is Not All You Need: Maximizing Goodput in LLM Serving using Prefill-Decode Disaggregation | Hao AI Lab @ UCSD", "date": "Thu, 4 Apr 2024 03:01:23 -0700", "link": "https://hao-ai-lab.github.io/blogs/distserve/"}
 {"subject": "Lena @ Things Of Interest", "date": "Thu, 4 Apr 2024 03:01:10 -0700", "link": "https://qntm.org/mmacevedo"}
-{"subject": "Transformer Math 101 | EleutherAI Blog", "date": "Thu, 4 Apr 2024 02:59:03 -0700", "link": "https://blog.eleuther.ai/transformer-math/"}
 {"subject": "What Shapes Do Matrix Multiplications Like?", "date": "Thu, 4 Apr 2024 02:52:40 -0700", "link": "https://www.thonking.ai/p/what-shapes-do-matrix-multiplications"}
 {"subject": "Hierarchical Navigable Small Worlds (HNSW) | Frank\u2019s Ramblings", "date": "Thu, 4 Apr 2024 02:51:38 -0700", "link": "https://frankzliu.com/blog/hierarchical-navigable-small-worlds"}
 {"subject": "Mixture-of-Depths: Dynamically allocating compute in transformer-based language models", "date": "Wed, 3 Apr 2024 22:38:05 -0700", "link": "https://arxiv.org/abs/2404.02258?s=03"}
