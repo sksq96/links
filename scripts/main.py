@@ -55,6 +55,7 @@ def get_email_details(service, emails):
         if 'parts' in payload:
             for part in payload['parts']:
                 if part['mimeType'] == 'text/plain':
+                    print(part['body'])
                     message_body = base64.urlsafe_b64decode(part['body']['data']).decode('utf-8')
         else:
             message_body = base64.urlsafe_b64decode(payload['body']['data']).decode('utf-8')
