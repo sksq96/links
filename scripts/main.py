@@ -68,9 +68,11 @@ def get_email_details(service, emails):
             print(f"SKIPPING: {subject}")
         
         with open('/Users/shubham.chandel/Documents/github/links/client/public/links.jsonl', 'a') as f:
-            link = message_body.strip().replace('Thanks,\r\nShubham', '')
-            link = link.split("\n")[0].strip()
-            link = link.replace("<", "").replace(">", "")
+            link = message_body.strip()\
+                .replace('Thanks,\r\nShubham', '')\
+                .replace("Thanks and regards,\r\nShubham Chandel", "")\
+                .replace("Thanks and Regards,\r\n\r\nShubham Chandel\r\nNew York University", "")\
+                .replace("<", "").replace(">", "").replace("\r\n", "")
             if link in links:
                 continue
             links.add(link)
