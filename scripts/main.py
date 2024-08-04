@@ -54,11 +54,12 @@ def get_email_details(service, emails):
                 date = header['value']
         
         print(subject)
-        print(payload)
+        # print(payload)
         if 'parts' in payload:
             for part in payload['parts']:
                 if part['mimeType'] == 'text/plain':
                     message_body = base64.urlsafe_b64decode(part['body']['data']).decode('utf-8')
+                    break
         else:
             message_body = base64.urlsafe_b64decode(payload['body']['data']).decode('utf-8')
         
