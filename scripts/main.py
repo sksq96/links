@@ -67,11 +67,15 @@ def get_email_details(service, emails):
             message_body = ""
             print(f"SKIPPING: {subject}")
         
+        if "intended for a specific individual and purpose" in message_body:
+            pass
+
         with open('/Users/shubham.chandel/Documents/github/links/client/public/links.jsonl', 'a') as f:
             link = message_body.strip()\
                 .replace('Thanks,\r\nShubham', '')\
                 .replace("Thanks and regards,\r\nShubham Chandel", "")\
                 .replace("Thanks and Regards,\r\n\r\nShubham Chandel\r\nNew York University", "")\
+                .replace("-- \r\nThis message (including any attachments) contains confidential information \r\nintended for a specific individual and purpose, and is protected by law. If \r\nyou are not the intended recipient, you should delete this message and are \r\nhereby notified that any disclosure, copying, or distribution of this \r\nmessage, or the taking of any action based on it, is strictly prohibited.", "")\
                 .replace("<", "").replace(">", "").replace("\r\n", "")
             if link in links:
                 continue
