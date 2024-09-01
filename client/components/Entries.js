@@ -1,16 +1,26 @@
 import { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
+import axios from 'axios'; // You'll need to install this package
 
 function Entry({ title, created, link }) {
-  const dateObj = new Date(created);
-  const easternTime = dateObj.toLocaleString('en-US', { timeZone: 'America/New_York' });
-  const date = easternTime.split(',')[0];
-  const formattedDate = new Date(date).toISOString().split('T')[0];
+  let formattedDate = '';
+  if (created) {
+    try {
+      const dateObj = new Date(created);
+      if (!isNaN(dateObj.getTime())) {
+        const easternTime = dateObj.toLocaleString('en-US', { timeZone: 'America/New_York' });
+        const date = easternTime.split(',')[0];
+        formattedDate = new Date(date).toISOString().split('T')[0];
+      }
+    } catch (error) {
+      console.error('Error formatting date:', error);
+    }
+  }
 
   return (
     <a href={link} target="_blank" className="flex justify-between text-secondary py-1 group text-md">
       <strong className="font-medium break-word sm:break-normal text-gray-900 group-hover:text-indigo-600 dark:text-gray-100 dark:group-hover:text-indigo-500">{title}</strong>
-      <p className="font-berkeley whitespace-nowrap ml-4 sm:ml-12">{formattedDate}</p>
+      {formattedDate && <p className="font-berkeley whitespace-nowrap ml-4 sm:ml-12">{formattedDate}</p>}
     </a>
   );
 }
@@ -18,41 +28,33 @@ function Entry({ title, created, link }) {
 export function Entries({ database, supabase }) {
   const [entries, setEntries] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  async function fetchPosts() {
+  const fetchSearchResults = async (term) => {
+    setIsLoading(true);
     try {
-      const response = await fetch('/links.jsonl');
-      const text = await response.text();
-      const lines = text.trim().split('\n');
-      const data = lines.map(line => {
-        const entry = JSON.parse(line);
-        return {
-          title: entry.subject || entry.link,
-          url: entry.link,
-          notion_timestamp: entry.date,
-        };
+      const response = await axios.get('https://sksq96--search-app-searchapp-search.modal.run', {
+        params: { term }
       });
-      setEntries(data);
+      setEntries(response.data);
     } catch (error) {
-      console.error('Error fetching entries:', error);
+      console.error('Error fetching search results:', error);
+    } finally {
+      setIsLoading(false);
     }
-  }  
+  };
 
+  // Remove or update the useEffect hook
+  // If you want to load initial data, you can use it like this:
   useEffect(() => {
-    fetchPosts();
-  }, [database]);
+    fetchSearchResults(''); // Fetch initial results with an empty search term
+  }, []); // Empty dependency array means this effect runs once when the component mounts
 
-  const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value.toLowerCase());
-  };
-
-  const handleShuffleClick = () => {
-    if (filteredEntries.length > 0) {
-      const randomEntry = filteredEntries[Math.floor(Math.random() * filteredEntries.length)];
-      const modifiedUrl = randomEntry.url.replace(/pdf(?=.)/, "abs").replace(/v\d+$/, "");
-      window.open(modifiedUrl, '_blank').focus();
-    }
-  };
+  const handleSearchChange = debounce((event) => {
+    const term = event.target.value.toLowerCase();
+    setSearchTerm(term);
+    fetchSearchResults(term);
+  }, 300);
 
   const filteredEntries = entries.filter(entry => {
     const normalizedTitle = entry.title?.replace(/\s+/g, '').toLowerCase();
@@ -62,29 +64,28 @@ export function Entries({ database, supabase }) {
   });
   
   return (
-    <div className="px-4 mt-24 pb-40 md:pb-8">
-      <div className="mx-auto max-w-5xl">
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={handleSearchChange}
-          className="placeholder-gray-600 p-2 border border-gray-400 rounded-md mb-4 bg-[#fff2e3]"
-        />
-        <button
-          onClick={handleShuffleClick}
-          className="flex items-center justify-center gap-2 text-gray-600 p-2 border border-gray-400 rounded-md mb-4 float-right bg-[#fff2e3] hover:bg-indigo-100"
-        >
-          Shuffle
-          <svg width="18" height="18" viewBox="0 0 92 92"><path d=""></path></svg>
-        </button>
-        {filteredEntries.map((entry, index) => (
-          <Entry
-            key={index}
-            title={entry.title}
-            created={entry.notion_timestamp}
-            link={entry.url.replace(/pdf(?=.)/, "abs").replace(/v\d+$/, "")}
+    <div className="px-4 mt-24 pb-40 md:pb-8 flex justify-center">
+      <div className="mx-auto max-w-5xl w-full">
+        <div className="flex justify-center mb-4">
+          <input
+            type="text"
+            placeholder="Search"
+            onChange={handleSearchChange}
+            className="placeholder-gray-600 p-2 border border-gray-400 rounded-md bg-[#fff2e3] w-full max-w-md"
           />
-        ))}
+        </div>
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          entries.map((entry, index) => (
+            <Entry
+              key={index}
+              title={entry.title}
+              created={entry.date || ''} // API doesn't provide this, so we're using an empty string as fallback
+              link={entry.url}
+            />
+          ))
+        )}
       </div>
     </div>
   );

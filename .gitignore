@@ -3,3 +3,6 @@ venv/
 run.sh
 **/credentials.json
 **/token.pickle
+**/df.embedding
+**/embed.py
+**.ipynb
