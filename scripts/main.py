@@ -70,7 +70,7 @@ def get_email_details(service, emails):
         if "intended for a specific individual and purpose" in message_body:
             pass
 
-        with open('/Users/shubham.chandel/Documents/github/links/client/public/links.jsonl', 'a') as f:
+        with open('./links.jsonl', 'a') as f:
             link = message_body.strip()\
                 .replace('Thanks,\r\nShubham', '')\
                 .replace("Thanks and regards,\r\nShubham Chandel", "")\

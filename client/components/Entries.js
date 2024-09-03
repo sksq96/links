@@ -66,6 +66,9 @@ export function Entries({ database, supabase }) {
   return (
     <div className="px-4 mt-24 pb-40 md:pb-8 flex justify-center">
       <div className="mx-auto max-w-5xl w-full">
+        <div className="text-center mb-2 text-gray-600">
+          <strong>shubham's internet</strong>
+        </div>
         <div className="flex justify-center mb-4">
           <input
             type="text"

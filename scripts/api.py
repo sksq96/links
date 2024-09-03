@@ -15,7 +15,8 @@ volume = modal.Volume.from_name("embeddings")
 @app.cls(
     image=docker_image(),
     secrets=[cohere_secret],
-    gpu="any",
+    cpu=1,  # Request 1 CPU core
+    memory=1024,  # Request 1 GB of memory
     volumes={"/data": volume}
 )
 class SearchApp:
@@ -31,6 +32,7 @@ class SearchApp:
         # list all files in the volume
         print(os.listdir("/data/data"))
         self.df = self.pd.read_pickle("/data/data/df.embedding")
+        print("# of embeddings: ", self.df.shape)
         self.embeddings = self.df['embeddings'].tolist()
 
     def cosine_similarity(self, arr, matrix):
