@@ -7,6 +7,26 @@ function getRandomLoadTime() {
   return (Math.random() * (5 - 3) + 3).toFixed(1);
 }
 
+// Add a collection of dad jokes
+const dadJokes = [
+  "Why don't scientists trust atoms? Because they make up everything!",
+  "I told my wife she was drawing her eyebrows too high. She looked surprised.",
+  "What do you call a fake noodle? An impasta!",
+  "How do you organize a space party? You planet!",
+  "Why did the scarecrow win an award? Because he was outstanding in his field!",
+  "I'm reading a book about anti-gravity. It's impossible to put down!",
+  "Did you hear about the mathematician who's afraid of negative numbers? He'll stop at nothing to avoid them!",
+  "Why don't skeletons fight each other? They don't have the guts.",
+  "What's the best thing about Switzerland? I don't know, but the flag is a big plus.",
+  "I used to play piano by ear, but now I use my hands."
+];
+
+// Function to get a random dad joke
+function getRandomDadJoke() {
+  const randomIndex = Math.floor(Math.random() * dadJokes.length);
+  return dadJokes[randomIndex];
+}
+
 function Entry({ title, created, link }) {
   let formattedDate = '';
   if (created) {
@@ -35,10 +55,12 @@ export function Entries({ database, supabase }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [loadTime, setLoadTime] = useState(getRandomLoadTime());
+  const [dadJoke, setDadJoke] = useState(getRandomDadJoke());
 
   const fetchSearchResults = async (term) => {
     setIsLoading(true);
     setLoadTime(getRandomLoadTime()); // Set a new random load time for each search
+    setDadJoke(getRandomDadJoke()); // Set a new random dad joke for each search
     try {
       const response = await axios.get('https://sksq96--search-app-searchapp-search.modal.run', {
         params: { term }
@@ -108,7 +130,7 @@ export function Entries({ database, supabase }) {
         <div className="space-y-0 divide-[#222]">
           {isLoading ? (
             <div className="flex flex-col items-center justify-center py-16">
-              <p className="text-gray-400 text-center font-medium mb-2">Please wait {loadTime} seconds for the page to load...</p>
+              <p className="text-gray-400 text-center font-medium mb-2">"{dadJoke}"</p>
               <div className="w-16 h-0.5 bg-gray-800 mt-4"></div>
             </div>
           ) : (
