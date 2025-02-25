@@ -72,9 +72,9 @@ export function Entries({ database, supabase }) {
   
   return (
     <div 
-      className="min-h-screen bg-black text-gray-100 flex flex-col"
+      className="min-h-screen text-gray-100 flex flex-col"
       style={{ 
-        background: "linear-gradient(to bottom, #000000, #0a0a0a 100%)",
+        backgroundColor: "rgb(12, 10, 9)",
         backgroundAttachment: "fixed"
       }}
     >
