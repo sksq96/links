@@ -78,7 +78,7 @@ export function Entries() {
   const isMLRelated = (entry) => {
     const title = entry.title?.toLowerCase() || '';
     const url = entry.url?.toLowerCase() || '';
-    return mlKeywords.some(keyword => title.includes(keyword) || url.includes(keyword));
+    return mlKeywords.some(keyword => title.includes(keyword)); // || url.includes(keyword));
   };
 
   // Create disjoint sets of entries
