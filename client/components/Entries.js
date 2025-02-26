@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
 import axios from 'axios'; // You'll need to install this package
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 // Add this function at the top of your file, outside of any component
 function getRandomLoadTime() {
@@ -56,6 +57,7 @@ export function Entries({ database, supabase }) {
   const [isLoading, setIsLoading] = useState(false);
   const [loadTime, setLoadTime] = useState(getRandomLoadTime());
   const [dadJoke, setDadJoke] = useState(getRandomDadJoke());
+  const [activeTab, setActiveTab] = useState("links");
 
   const fetchSearchResults = async (term) => {
     setIsLoading(true);
@@ -85,12 +87,22 @@ export function Entries({ database, supabase }) {
     fetchSearchResults(term);
   }, 300);
 
+  // Filter entries based on search term
   const filteredEntries = entries.filter(entry => {
     const normalizedTitle = entry.title?.replace(/\s+/g, '').toLowerCase();
     const normalizedLink = entry.url?.replace(/\s+/g, '').toLowerCase();
     const normalizedSearchTerm = searchTerm.replace(/\s+/g, '').toLowerCase();
     return normalizedTitle?.includes(normalizedSearchTerm) || normalizedLink?.includes(normalizedSearchTerm);
   });
+
+  // Separate entries into arxiv and non-arxiv
+  const arxivEntries = filteredEntries.filter(entry => 
+    entry.url?.toLowerCase().includes('arxiv')
+  );
+  
+  const nonArxivEntries = filteredEntries.filter(entry => 
+    !entry.url?.toLowerCase().includes('arxiv')
+  );
   
   return (
     <div 
@@ -101,7 +113,7 @@ export function Entries({ database, supabase }) {
       }}
     >
       <div className="w-full max-w-5xl mx-auto px-6 py-16">
-        <div className="mb-16 pt-8">
+        <div className="mb-8 pt-8">
           <h1 
             className="text-4xl md:text-5xl text-center text-white mb-8 font-serif" 
             style={{ 
@@ -113,7 +125,7 @@ export function Entries({ database, supabase }) {
           >
             Shubham's Internet*
           </h1>
-          <div className="flex justify-center mb-16">
+          <div className="flex justify-center mb-4">
             <input
               type="text"
               placeholder="Search"
@@ -127,23 +139,59 @@ export function Entries({ database, supabase }) {
           </div>
         </div>
         
-        <div className="space-y-0 divide-[#222]">
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-16">
-              <p className="text-gray-400 text-center font-medium mb-2">"{dadJoke}"</p>
-              <div className="w-16 h-0.5 bg-gray-800 mt-4"></div>
-            </div>
-          ) : (
-            entries.map((entry, index) => (
-              <Entry
-                key={index}
-                title={entry.title}
-                created={entry.date || ''}
-                link={entry.url}
-              />
-            ))
-          )}
-        </div>
+        {isLoading ? (
+          <div className="flex flex-col items-center justify-center py-16">
+            <p className="text-gray-400 text-center font-medium mb-2">"{dadJoke}"</p>
+            <div className="w-16 h-0.5 bg-gray-800 mt-4"></div>
+          </div>
+        ) : (
+          <Tabs defaultValue="links" className="w-full" onValueChange={setActiveTab}>
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 bg-[#111] border border-[#333]">
+              <TabsTrigger 
+                value="links" 
+                className="data-[state=active]:bg-[#222] data-[state=active]:text-white"
+              >
+                Links ({nonArxivEntries.length})
+              </TabsTrigger>
+              <TabsTrigger 
+                value="arxiv" 
+                className="data-[state=active]:bg-[#222] data-[state=active]:text-white"
+              >
+                Arxiv ({arxivEntries.length})
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="links" className="space-y-0 divide-[#222]">
+              {nonArxivEntries.length === 0 ? (
+                <p className="text-gray-400 text-center py-8">No links found</p>
+              ) : (
+                nonArxivEntries.map((entry, index) => (
+                  <Entry
+                    key={index}
+                    title={entry.title}
+                    created={entry.date || ''}
+                    link={entry.url}
+                  />
+                ))
+              )}
+            </TabsContent>
+            
+            <TabsContent value="arxiv" className="space-y-0 divide-[#222]">
+              {arxivEntries.length === 0 ? (
+                <p className="text-gray-400 text-center py-8">No arxiv papers found</p>
+              ) : (
+                arxivEntries.map((entry, index) => (
+                  <Entry
+                    key={index}
+                    title={entry.title}
+                    created={entry.date || ''}
+                    link={entry.url}
+                  />
+                ))
+              )}
+            </TabsContent>
+          </Tabs>
+        )}
       </div>
     </div>
   );
