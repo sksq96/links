@@ -71,7 +71,7 @@ export function Entries() {
     return title.includes(term) || url.includes(term);
   });
 
-  const mlKeywords = ['rl ', 'ml ', 'ai ', 'llm', 'model', 'tech', 'sft', 'deepseek', 'cuda', 'agi', 'torch', 'training', 'agent', 'bert', 'gpu', 'llama', 'jax', 'transformer', 'reinforcement', 'gradient', 'tensor', 'neural', 'token', 'anthropic', 'machine learning', 'grpo', 'gpt', 'github', 'hugging', 'deepmind', 'attention'];
+  const mlKeywords = ['rl ', 'ml ', 'ai ', 'llm', 'model', 'tech', 'sft', 'deepseek', 'cuda', 'agi', 'torch', 'training', 'agent', 'bert', 'gpu', 'llama', 'jax', 'transformer', 'reinforcement', 'gradient', 'tensor', 'neural', 'token', 'anthropic', 'machine learning', 'grpo', 'gpt', 'github', 'hugging', 'deepmind', 'attention', 'openai'];
   
   const isMLRelated = (entry) => {
     const title = entry.title?.toLowerCase() || '';
@@ -79,8 +79,17 @@ export function Entries() {
     return mlKeywords.some(keyword => title.includes(keyword) || url.includes(keyword));
   };
 
+  // Create disjoint sets of entries
+  // First priority: Arxiv entries
   const arxivEntries = filteredEntries.filter(entry => entry.url?.toLowerCase().includes('arxiv'));
-  const mlEntries = filteredEntries.filter(isMLRelated);
+  
+  // Second priority: ML entries (excluding any already in arxiv)
+  const mlEntries = filteredEntries.filter(entry => 
+    !entry.url?.toLowerCase().includes('arxiv') && 
+    isMLRelated(entry)
+  );
+  
+  // Third priority: All other entries
   const nonSpecialEntries = filteredEntries.filter(entry => 
     !entry.url?.toLowerCase().includes('arxiv') && 
     !isMLRelated(entry)
