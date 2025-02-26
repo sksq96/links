@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react';
 import debounce from 'lodash/debounce';
-import axios from 'axios'; // You'll need to install this package
+import axios from 'axios';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-// Add this function at the top of your file, outside of any component
-function getRandomLoadTime() {
-  return (Math.random() * (5 - 3) + 3).toFixed(1);
-}
-
-// Add a collection of dad jokes
 const dadJokes = [
   "Why don't scientists trust atoms? Because they make up everything!",
   "I told my wife she was drawing her eyebrows too high. She looked surprised.",
@@ -22,21 +16,13 @@ const dadJokes = [
   "I used to play piano by ear, but now I use my hands."
 ];
 
-// Function to get a random dad joke
-function getRandomDadJoke() {
-  const randomIndex = Math.floor(Math.random() * dadJokes.length);
-  return dadJokes[randomIndex];
-}
-
 function Entry({ title, created, link }) {
   let formattedDate = '';
   if (created) {
     try {
       const dateObj = new Date(created);
       if (!isNaN(dateObj.getTime())) {
-        const easternTime = dateObj.toLocaleString('en-US', { timeZone: 'America/New_York' });
-        const date = easternTime.split(',')[0];
-        formattedDate = new Date(date).toISOString().split('T')[0];
+        formattedDate = new Date(dateObj.toLocaleString('en-US', { timeZone: 'America/New_York' }).split(',')[0]).toISOString().split('T')[0];
       }
     } catch (error) {
       console.error('Error formatting date:', error);
@@ -51,23 +37,18 @@ function Entry({ title, created, link }) {
   );
 }
 
-export function Entries({ database, supabase }) {
+export function Entries() {
   const [entries, setEntries] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [loadTime, setLoadTime] = useState(getRandomLoadTime());
-  const [dadJoke, setDadJoke] = useState(getRandomDadJoke());
-  const [activeTab, setActiveTab] = useState("links");
+  const [dadJoke, setDadJoke] = useState(dadJokes[Math.floor(Math.random() * dadJokes.length)]);
 
   const fetchSearchResults = async (term) => {
     setIsLoading(true);
-    setLoadTime(getRandomLoadTime()); // Set a new random load time for each search
-    setDadJoke(getRandomDadJoke()); // Set a new random dad joke for each search
+    setDadJoke(dadJokes[Math.floor(Math.random() * dadJokes.length)]);
     try {
-      const response = await axios.get('https://sksq96--search-app-searchapp-search.modal.run', {
-        params: { term }
-      });
-      setEntries(response.data);
+      const { data } = await axios.get('https://sksq96--search-app-searchapp-search.modal.run', { params: { term } });
+      setEntries(data);
     } catch (error) {
       console.error('Error fetching search results:', error);
     } finally {
@@ -75,66 +56,48 @@ export function Entries({ database, supabase }) {
     }
   };
 
-  // Remove or update the useEffect hook
-  // If you want to load initial data, you can use it like this:
-  useEffect(() => {
-    fetchSearchResults(''); // Fetch initial results with an empty search term
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+  useEffect(() => { fetchSearchResults(''); }, []);
 
-  const handleSearchChange = debounce((event) => {
-    const term = event.target.value.toLowerCase();
+  const handleSearchChange = debounce(e => {
+    const term = e.target.value.toLowerCase();
     setSearchTerm(term);
     fetchSearchResults(term);
   }, 300);
 
-  // Filter entries based on search term
   const filteredEntries = entries.filter(entry => {
-    const normalizedTitle = entry.title?.replace(/\s+/g, '').toLowerCase();
-    const normalizedLink = entry.url?.replace(/\s+/g, '').toLowerCase();
-    const normalizedSearchTerm = searchTerm.replace(/\s+/g, '').toLowerCase();
-    return normalizedTitle?.includes(normalizedSearchTerm) || normalizedLink?.includes(normalizedSearchTerm);
+    const title = entry.title?.replace(/\s+/g, '').toLowerCase() || '';
+    const url = entry.url?.replace(/\s+/g, '').toLowerCase() || '';
+    const term = searchTerm.replace(/\s+/g, '').toLowerCase();
+    return title.includes(term) || url.includes(term);
   });
 
-  // Separate entries into arxiv and non-arxiv
-  const arxivEntries = filteredEntries.filter(entry => 
-    entry.url?.toLowerCase().includes('arxiv')
-  );
+  const mlKeywords = ['rl ', 'ml ', 'ai ', 'llm', 'model', 'tech', 'sft', 'deepseek', 'cuda', 'agi', 'torch', 'training', 'agent', 'bert', 'gpu', 'llama', 'jax', 'transformer', 'reinforcement', 'gradient', 'tensor', 'neural', 'token', 'anthropic', 'machine learning', 'grpo', 'gpt', 'github', 'hugging', 'deepmind', 'attention'];
   
-  const nonArxivEntries = filteredEntries.filter(entry => 
-    !entry.url?.toLowerCase().includes('arxiv')
+  const isMLRelated = (entry) => {
+    const title = entry.title?.toLowerCase() || '';
+    const url = entry.url?.toLowerCase() || '';
+    return mlKeywords.some(keyword => title.includes(keyword) || url.includes(keyword));
+  };
+
+  const arxivEntries = filteredEntries.filter(entry => entry.url?.toLowerCase().includes('arxiv'));
+  const mlEntries = filteredEntries.filter(isMLRelated);
+  const nonSpecialEntries = filteredEntries.filter(entry => 
+    !entry.url?.toLowerCase().includes('arxiv') && 
+    !isMLRelated(entry)
   );
   
   return (
-    <div 
-      className="min-h-screen text-gray-100 flex flex-col"
-      style={{ 
-        backgroundColor: "rgb(12, 10, 9)",
-        backgroundAttachment: "fixed"
-      }}
-    >
+    <div className="min-h-screen text-gray-100 flex flex-col" style={{ backgroundColor: "rgb(12, 10, 9)", backgroundAttachment: "fixed" }}>
       <div className="w-full max-w-5xl mx-auto px-6 py-16">
         <div className="mb-8 pt-8">
-          <h1 
-            className="text-4xl md:text-5xl text-center text-white mb-8 font-serif" 
-            style={{ 
-              fontFamily: "'Times New Roman', Times, serif",
-              fontWeight: 500,
-              letterSpacing: '-0.02em',
-              textShadow: '0 2px 10px rgba(255,255,255,0.05)'
-            }}
-          >
-            Shubham's Internet*
-          </h1>
+          <h1 className="text-4xl md:text-5xl text-center text-white mb-8 font-serif" style={{ fontFamily: "'Times New Roman', Times, serif", fontWeight: 500, letterSpacing: '-0.02em', textShadow: '0 2px 10px rgba(255,255,255,0.05)' }}>Shubham's Internet*</h1>
           <div className="flex justify-center mb-4">
             <input
               type="text"
               placeholder="Search"
               onChange={handleSearchChange}
               className="w-full max-w-2xl p-3 bg-[#111] border border-[#333] rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-700 focus:border-gray-600 transition-all duration-300 shadow-lg font-medium"
-              style={{ 
-                fontFamily: "system-ui, sans-serif",
-                boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)"
-              }}
+              style={{ fontFamily: "system-ui, sans-serif", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)" }}
             />
           </div>
         </div>
@@ -145,50 +108,32 @@ export function Entries({ database, supabase }) {
             <div className="w-16 h-0.5 bg-gray-800 mt-4"></div>
           </div>
         ) : (
-          <Tabs defaultValue="links" className="w-full" onValueChange={setActiveTab}>
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 mb-8 bg-[#111] border border-[#333]">
-              <TabsTrigger 
-                value="links" 
-                className="data-[state=active]:bg-[#222] data-[state=active]:text-white"
-              >
-                Links ({nonArxivEntries.length})
-              </TabsTrigger>
-              <TabsTrigger 
-                value="arxiv" 
-                className="data-[state=active]:bg-[#222] data-[state=active]:text-white"
-              >
-                Arxiv ({arxivEntries.length})
-              </TabsTrigger>
+          <Tabs defaultValue="links" className="w-full">
+            <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-8 bg-[#111] border border-[#333]">
+              <TabsTrigger value="links" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">Links ({nonSpecialEntries.length})</TabsTrigger>
+              <TabsTrigger value="ml" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">ML ({mlEntries.length})</TabsTrigger>
+              <TabsTrigger value="arxiv" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">Arxiv ({arxivEntries.length})</TabsTrigger>
             </TabsList>
             
             <TabsContent value="links" className="space-y-0 divide-[#222]">
-              {nonArxivEntries.length === 0 ? (
-                <p className="text-gray-400 text-center py-8">No links found</p>
-              ) : (
-                nonArxivEntries.map((entry, index) => (
-                  <Entry
-                    key={index}
-                    title={entry.title}
-                    created={entry.date || ''}
-                    link={entry.url}
-                  />
-                ))
-              )}
+              {nonSpecialEntries.length === 0 ? 
+                <p className="text-gray-400 text-center py-8">No links found</p> : 
+                nonSpecialEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+              }
+            </TabsContent>
+            
+            <TabsContent value="ml" className="space-y-0 divide-[#222]">
+              {mlEntries.length === 0 ? 
+                <p className="text-gray-400 text-center py-8">No ML-related content found</p> : 
+                mlEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+              }
             </TabsContent>
             
             <TabsContent value="arxiv" className="space-y-0 divide-[#222]">
-              {arxivEntries.length === 0 ? (
-                <p className="text-gray-400 text-center py-8">No arxiv papers found</p>
-              ) : (
-                arxivEntries.map((entry, index) => (
-                  <Entry
-                    key={index}
-                    title={entry.title}
-                    created={entry.date || ''}
-                    link={entry.url}
-                  />
-                ))
-              )}
+              {arxivEntries.length === 0 ? 
+                <p className="text-gray-400 text-center py-8">No arxiv papers found</p> : 
+                arxivEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+              }
             </TabsContent>
           </Tabs>
         )}
