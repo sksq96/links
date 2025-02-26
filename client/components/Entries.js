@@ -48,6 +48,7 @@ export function Entries() {
     setDadJoke(dadJokes[Math.floor(Math.random() * dadJokes.length)]);
     try {
       const { data } = await axios.get('https://sksq96--search-app-searchapp-search.modal.run', { params: { term } });
+      console.log(`API returned ${data.length} search results for term: "${term}"`);
       setEntries(data);
     } catch (error) {
       console.error('Error fetching search results:', error);
@@ -64,12 +65,13 @@ export function Entries() {
     fetchSearchResults(term);
   }, 300);
 
-  const filteredEntries = entries.filter(entry => {
-    const title = entry.title?.replace(/\s+/g, '').toLowerCase() || '';
-    const url = entry.url?.replace(/\s+/g, '').toLowerCase() || '';
-    const term = searchTerm.replace(/\s+/g, '').toLowerCase();
-    return title.includes(term) || url.includes(term);
-  });
+  const filteredEntries = entries;
+  // const filteredEntries = entries.filter(entry => {
+  //   const title = entry.title?.replace(/\s+/g, '').toLowerCase() || '';
+  //   const url = entry.url?.replace(/\s+/g, '').toLowerCase() || '';
+  //   const term = searchTerm.replace(/\s+/g, '').toLowerCase();
+  //   return title.includes(term) || url.includes(term);
+  // });
 
   const mlKeywords = ['rl ', 'ml ', 'ai ', 'llm', 'model', 'tech', 'sft', 'deepseek', 'cuda', 'agi', 'torch', 'training', 'agent', 'bert', 'gpu', 'llama', 'jax', 'transformer', 'reinforcement', 'gradient', 'tensor', 'neural', 'token', 'anthropic', 'machine learning', 'grpo', 'gpt', 'github', 'hugging', 'deepmind', 'attention', 'openai'];
   
