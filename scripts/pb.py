@@ -116,5 +116,12 @@ if __name__ == '__main__':
             from dateutil.parser import parse
             if len(row['link'].split()) > 5:
                 continue
-            new = client.add_row('links', {'ogdate': parse(row['date']), 'link': row['link'], 'title': row['subject']})
+            # Generate a fake gmail_id for old data
+            gmail_id = f"jsonl_{index}"
+            new = client.add_row('links', {
+                'ogdate': parse(row['date']), 
+                'link': row['link'], 
+                'title': row['subject'],
+                'gmail_id': gmail_id
+            })
             # break

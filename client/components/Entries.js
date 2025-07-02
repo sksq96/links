@@ -54,16 +54,18 @@ export function Entries() {
   const [isLoading, setIsLoading] = useState(false);
   const [dadJoke, setDadJoke] = useState(dadJokes[Math.floor(Math.random() * dadJokes.length)]);
   const [showRandom, setShowRandom] = useState(false);
+  const [activeTab, setActiveTab] = useState('links');
   const searchInputRef = useRef(null);
   
   // Initialize Fuse.js for fuzzy search
   const fuse = useMemo(() => {
     return new Fuse(entries, {
       keys: ['title', 'url'],
-      threshold: 0.4, // Adjust for fuzziness (0 = exact, 1 = very fuzzy)
+      threshold: 0.6, // More permissive (0 = exact, 1 = very fuzzy)
       includeScore: true,
       ignoreLocation: true, // Search anywhere in the string
       minMatchCharLength: 2,
+      shouldSort: true, // Ensure results are sorted by relevance
     });
   }, [entries]);
 
@@ -122,13 +124,36 @@ export function Entries() {
   useEffect(() => { 
     fetchSearchResults(''); 
     
-    // Add global keyboard shortcut
+    // Add global keyboard shortcuts
     const handleKeyDown = (e) => {
       // Check for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
         searchInputRef.current?.focus();
         searchInputRef.current?.select(); // Select all text for easy replacement
+      }
+      
+      // Check for Escape key
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setSearchTerm('');
+        searchInputRef.current.value = '';
+        searchInputRef.current?.blur(); // Optionally unfocus the input
+        setShowRandom(false); // Also exit random mode
+      }
+      
+      // Check for number keys 1, 2, 3 for tab switching
+      if (e.key === '1' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
+        e.preventDefault();
+        setActiveTab('links');
+      }
+      if (e.key === '2' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
+        e.preventDefault();
+        setActiveTab('ml');
+      }
+      if (e.key === '3' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
+        e.preventDefault();
+        setActiveTab('arxiv');
       }
     };
     
@@ -162,7 +187,7 @@ export function Entries() {
   const randomEntries = useMemo(() => {
     if (entries.length === 0) return [];
     const shuffled = [...entries].sort(() => Math.random() - 0.5);
-    return shuffled.slice(0, 10);
+    return shuffled.slice(0, 200); // Show many more random entries
   }, [entries, showRandom]);
   
   // Get rotating suggested searches from all entries
@@ -211,18 +236,21 @@ export function Entries() {
     return mlKeywords.some(keyword => title.includes(keyword)); // || url.includes(keyword));
   };
 
+  // Use random entries or filtered entries based on mode
+  const displayEntries = showRandom ? randomEntries : filteredEntries;
+  
   // Create disjoint sets of entries
   // First priority: Arxiv entries
-  const arxivEntries = filteredEntries.filter(entry => entry.url?.toLowerCase().includes('arxiv'));
+  const arxivEntries = displayEntries.filter(entry => entry.url?.toLowerCase().includes('arxiv'));
   
   // Second priority: ML entries (excluding any already in arxiv)
-  const mlEntries = filteredEntries.filter(entry => 
+  const mlEntries = displayEntries.filter(entry => 
     !entry.url?.toLowerCase().includes('arxiv') && 
     isMLRelated(entry)
   );
   
   // Third priority: All other entries
-  const nonSpecialEntries = filteredEntries.filter(entry => 
+  const nonSpecialEntries = displayEntries.filter(entry => 
     !entry.url?.toLowerCase().includes('arxiv') && 
     !isMLRelated(entry)
   );
@@ -233,20 +261,37 @@ export function Entries() {
         <div className="mb-8 pt-8">
           <h1 className="text-4xl md:text-5xl text-center text-white mb-8 font-serif" style={{ fontFamily: "'Times New Roman', Times, serif", fontWeight: 500, letterSpacing: '-0.02em', textShadow: '0 2px 10px rgba(255,255,255,0.05)' }}>Shubham's Internet*</h1>
           <div className="flex justify-center mb-4">
-            <input
-              ref={searchInputRef}
-              type="text"
-              placeholder="Search (⌘K)"
-              onChange={handleSearchChange}
-              className="w-full max-w-2xl p-3 bg-[#111] border border-[#333] rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-700 focus:border-gray-600 transition-all duration-300 shadow-lg font-medium"
-              style={{ fontFamily: "system-ui, sans-serif", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)" }}
-            />
+            <div className="relative w-full max-w-2xl">
+              <input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Search (⌘K)"
+                onChange={handleSearchChange}
+                className="w-full p-3 pr-10 bg-[#111] border border-[#333] rounded-md text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-gray-700 focus:border-gray-600 transition-all duration-300 shadow-lg font-medium"
+                style={{ fontFamily: "system-ui, sans-serif", boxShadow: "0 4px 20px rgba(0, 0, 0, 0.3)" }}
+              />
+              {searchTerm && (
+                <button
+                  onClick={() => {
+                    setSearchTerm('');
+                    searchInputRef.current.value = '';
+                    searchInputRef.current.focus();
+                  }}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors"
+                  aria-label="Clear search"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              )}
+            </div>
           </div>
           
           {/* Discovery Features */}
           <div className="max-w-2xl mx-auto mb-6">
             {/* Suggested Searches - Dynamic and subtle */}
-            {suggestedSearches.length > 0 && !searchTerm && !showRandom && (
+            {suggestedSearches.length > 0 && (
               <div className="mb-3 transition-opacity duration-500">
                 <div className="flex flex-wrap gap-1.5 items-center">
                   <span className="text-gray-600 text-xs mr-1">Try:</span>
@@ -256,6 +301,7 @@ export function Entries() {
                       onClick={() => {
                         setSearchTerm(suggestion);
                         searchInputRef.current.value = suggestion;
+                        setShowRandom(false); // Exit random mode when searching
                       }}
                       className="px-2 py-0.5 text-xs text-gray-500 hover:text-gray-300 hover:bg-[#1a1a1a] rounded transition-all animate-fadeIn"
                       style={{
@@ -270,49 +316,37 @@ export function Entries() {
               </div>
             )}
             
-            {/* Random Discovery */}
+            {/* Discovery Options */}
             <div className="flex items-center justify-between">
-              <button
-                onClick={() => setShowRandom(!showRandom)}
-                className="text-sm text-gray-400 hover:text-white transition-colors"
-              >
-                {showRandom ? "Hide" : "Show"} random links for discovery →
-              </button>
-              
-              {filteredEntries.length > 0 && (
-                <p className="text-sm text-gray-500">
-                  {searchTerm ? `Found ${filteredEntries.length} results` : `${filteredEntries.length} total links`}
-                </p>
-              )}
-            </div>
-            
-            {/* Random Links */}
-            {showRandom && randomEntries.length > 0 && (
-              <div className="mt-4 p-4 bg-[#0a0a0a] border border-[#222] rounded-lg">
-                <p className="text-sm text-gray-400 mb-3">Random selections:</p>
-                <div className="space-y-2">
-                  {randomEntries.map((entry, idx) => (
-                    <a 
-                      key={idx} 
-                      href={entry.url} 
-                      target="_blank" 
-                      className="block text-sm text-gray-300 hover:text-white truncate transition-colors"
-                    >
-                      {entry.title}
-                    </a>
-                  ))}
-                </div>
-                <button 
+              <div className="flex gap-3">
+                <button
                   onClick={() => {
-                    setShowRandom(false);
-                    setTimeout(() => setShowRandom(true), 50);
+                    setSearchTerm('');
+                    searchInputRef.current.value = '';
+                    setShowRandom(!showRandom);
                   }}
-                  className="mt-3 text-xs text-gray-500 hover:text-gray-300"
+                  className={`text-sm transition-colors ${showRandom ? 'text-white' : 'text-gray-400 hover:text-white'}`}
                 >
-                  Refresh random links
+                  {showRandom ? "← Show all" : "Show random →"}
                 </button>
+                {showRandom && (
+                  <button
+                    onClick={() => {
+                      // Force re-render to get new random selection
+                      setShowRandom(false);
+                      setTimeout(() => setShowRandom(true), 50);
+                    }}
+                    className="text-sm text-gray-400 hover:text-white transition-colors"
+                  >
+                    Shuffle
+                  </button>
+                )}
               </div>
-            )}
+              
+              <p className="text-sm text-gray-500">
+                {searchTerm ? `Found ${filteredEntries.length} results` : `${displayEntries.length} total links`}
+              </p>
+            </div>
           </div>
         </div>
         
@@ -322,34 +356,34 @@ export function Entries() {
             <div className="w-16 h-0.5 bg-gray-800 mt-4"></div>
           </div>
         ) : (
-          <Tabs defaultValue="links" className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-8 bg-[#111] border border-[#333]">
-              <TabsTrigger value="links" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">Links ({nonSpecialEntries.length})</TabsTrigger>
-              <TabsTrigger value="ml" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">ML ({mlEntries.length})</TabsTrigger>
-              <TabsTrigger value="arxiv" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">Arxiv ({arxivEntries.length})</TabsTrigger>
-            </TabsList>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+              <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 mb-8 bg-[#111] border border-[#333]">
+                <TabsTrigger value="links" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">Links ({nonSpecialEntries.length})</TabsTrigger>
+                <TabsTrigger value="ml" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">ML ({mlEntries.length})</TabsTrigger>
+                <TabsTrigger value="arxiv" className="data-[state=active]:bg-[#222] data-[state=active]:text-white">Arxiv ({arxivEntries.length})</TabsTrigger>
+              </TabsList>
             
-            <TabsContent value="links" className="space-y-0 divide-[#222]">
-              {nonSpecialEntries.length === 0 ? 
-                <p className="text-gray-400 text-center py-8">No links found</p> : 
-                nonSpecialEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
-              }
-            </TabsContent>
-            
-            <TabsContent value="ml" className="space-y-0 divide-[#222]">
-              {mlEntries.length === 0 ? 
-                <p className="text-gray-400 text-center py-8">No ML-related content found</p> : 
-                mlEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
-              }
-            </TabsContent>
-            
-            <TabsContent value="arxiv" className="space-y-0 divide-[#222]">
-              {arxivEntries.length === 0 ? 
-                <p className="text-gray-400 text-center py-8">No arxiv papers found</p> : 
-                arxivEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
-              }
-            </TabsContent>
-          </Tabs>
+              <TabsContent value="links" className="space-y-0 divide-[#222]">
+                {nonSpecialEntries.length === 0 ? 
+                  <p className="text-gray-400 text-center py-8">No links found</p> : 
+                  nonSpecialEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+                }
+              </TabsContent>
+              
+              <TabsContent value="ml" className="space-y-0 divide-[#222]">
+                {mlEntries.length === 0 ? 
+                  <p className="text-gray-400 text-center py-8">No ML-related content found</p> : 
+                  mlEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+                }
+              </TabsContent>
+              
+              <TabsContent value="arxiv" className="space-y-0 divide-[#222]">
+                {arxivEntries.length === 0 ? 
+                  <p className="text-gray-400 text-center py-8">No arxiv papers found</p> : 
+                  arxivEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+                }
+              </TabsContent>
+            </Tabs>
         )}
       </div>
     </div>
