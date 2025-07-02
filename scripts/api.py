@@ -4,20 +4,23 @@ import modal
 def docker_image():
     return (
         modal.Image.debian_slim()
-        .pip_install("pandas", "numpy", "cohere")
+        .pip_install("pandas", "numpy", "cohere", "openai")
     )
 
 app = modal.App("search-app")
 
 cohere_secret = modal.Secret.from_name("cohere-api-key")
+openai_secret = modal.Secret.from_name("my-openai-secret")
 volume = modal.Volume.from_name("embeddings")
 
 @app.cls(
     image=docker_image(),
-    secrets=[cohere_secret],
+    secrets=[cohere_secret, openai_secret],
     cpu=1,  # Request 1 CPU core
     memory=1024,  # Request 1 GB of memory
-    volumes={"/data": volume}
+    volumes={"/data": volume},
+    container_idle_timeout=300,
+    # keep_warm=1
 )
 class SearchApp:
     @modal.enter()
@@ -25,10 +28,12 @@ class SearchApp:
         import pandas as pd
         import numpy as np
         import cohere
+        from openai import OpenAI
 
         self.pd = pd
         self.np = np
         self.co = cohere.Client(api_key=os.environ["cohere"])
+        self.client = OpenAI()
         # list all files in the volume
         print(os.listdir("/data/data"))
         self.df = self.pd.read_pickle("/data/data/df.embedding")
@@ -47,7 +52,8 @@ class SearchApp:
             df = self.df[['link', 'subject', 'date']]
             df.columns = ['url', 'title', 'date']
             return df.to_dict(orient='records')
-        query_emb = self.co.embed(texts=[term], model="embed-english-v3.0", input_type="search_query").embeddings[0]
+        # query_emb = self.co.embed(texts=[term], model="embed-english-v3.0", input_type="search_query").embeddings[0]
+        query_emb = self.client.embeddings.create(input=[term], model="text-embedding-3-large").data[0].embedding
         similarity = self.cosine_similarity(query_emb, self.embeddings)
         # Replace argpartition with argsort for full sorting
         top_indices = self.np.argsort(similarity)[::-1]

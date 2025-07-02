@@ -94,4 +94,4 @@ def main():
     get_email_details(service, emails)
 
 if __name__ == '__main__':
-    main()
+    main() 
