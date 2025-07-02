@@ -27,7 +27,7 @@ const dadJokes = [
   "Why don't scientists trust stairs? Because they're always up to something!"
 ];
 
-function Entry({ title, created, link }) {
+function Entry({ title, created, link, isSelected, onRef }) {
   let formattedDate = '';
   if (created) {
     try {
@@ -41,7 +41,14 @@ function Entry({ title, created, link }) {
   }
 
   return (
-    <a href={link} target="_blank" className="flex justify-between items-center py-4 border-b border-[#222] group hover:bg-[#111] transition-all duration-300 px-1">
+    <a 
+      ref={onRef}
+      href={link} 
+      target="_blank" 
+      className={`flex justify-between items-center py-4 border-b border-[#222] group transition-all duration-300 px-1 ${
+        isSelected ? 'bg-[#222] text-white' : 'hover:bg-[#111]'
+      }`}
+    >
       <strong className="font-medium text-gray-200 group-hover:text-white transition-colors duration-300">{title}</strong>
       {formattedDate && <p className="text-gray-500 whitespace-nowrap ml-4 sm:ml-12 text-sm font-mono opacity-80 group-hover:opacity-100 transition-opacity duration-300">{formattedDate}</p>}
     </a>
@@ -55,6 +62,7 @@ export function Entries() {
   const [dadJoke, setDadJoke] = useState(dadJokes[Math.floor(Math.random() * dadJokes.length)]);
   const [showRandom, setShowRandom] = useState(false);
   const [activeTab, setActiveTab] = useState('links');
+  const [selectedIndex, setSelectedIndex] = useState(-1);
   const searchInputRef = useRef(null);
   
   // Initialize Fuse.js for fuzzy search
@@ -123,46 +131,6 @@ export function Entries() {
 
   useEffect(() => { 
     fetchSearchResults(''); 
-    
-    // Add global keyboard shortcuts
-    const handleKeyDown = (e) => {
-      // Check for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
-      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-        e.preventDefault();
-        searchInputRef.current?.focus();
-        searchInputRef.current?.select(); // Select all text for easy replacement
-      }
-      
-      // Check for Escape key
-      if (e.key === 'Escape') {
-        e.preventDefault();
-        setSearchTerm('');
-        searchInputRef.current.value = '';
-        searchInputRef.current?.blur(); // Optionally unfocus the input
-        setShowRandom(false); // Also exit random mode
-      }
-      
-      // Check for number keys 1, 2, 3 for tab switching
-      if (e.key === '1' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
-        e.preventDefault();
-        setActiveTab('links');
-      }
-      if (e.key === '2' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
-        e.preventDefault();
-        setActiveTab('ml');
-      }
-      if (e.key === '3' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
-        e.preventDefault();
-        setActiveTab('arxiv');
-      }
-    };
-    
-    window.addEventListener('keydown', handleKeyDown);
-    
-    // Cleanup
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
   }, []);
 
   const handleSearchChange = (e) => {
@@ -254,6 +222,104 @@ export function Entries() {
     !entry.url?.toLowerCase().includes('arxiv') && 
     !isMLRelated(entry)
   );
+  
+  // Keyboard navigation effect
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Check for Cmd+K (Mac) or Ctrl+K (Windows/Linux)
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select(); // Select all text for easy replacement
+      }
+      
+      // Check for Escape key
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        
+        // If search input is focused, just blur it (first Esc)
+        if (document.activeElement === searchInputRef.current) {
+          searchInputRef.current?.blur();
+        } else {
+          // If not focused, clear the search (second Esc)
+          setSearchTerm('');
+          searchInputRef.current.value = '';
+          setShowRandom(false); // Also exit random mode
+        }
+      }
+      
+      // Check for number keys 1, 2, 3 for tab switching
+      if (e.key === '1' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
+        e.preventDefault();
+        setActiveTab('links');
+        setSelectedIndex(0); // Reset selection when switching tabs
+      }
+      if (e.key === '2' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
+        e.preventDefault();
+        setActiveTab('ml');
+        setSelectedIndex(0);
+      }
+      if (e.key === '3' && !e.metaKey && !e.ctrlKey && document.activeElement !== searchInputRef.current) {
+        e.preventDefault();
+        setActiveTab('arxiv');
+        setSelectedIndex(0);
+      }
+      
+      // Navigation keys (only when not typing in search)
+      if (document.activeElement !== searchInputRef.current) {
+        // Get current tab's entries
+        let currentEntries = [];
+        if (activeTab === 'links') currentEntries = nonSpecialEntries;
+        else if (activeTab === 'ml') currentEntries = mlEntries;
+        else if (activeTab === 'arxiv') currentEntries = arxivEntries;
+        
+        // Arrow keys navigation
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          setSelectedIndex(prev => Math.min(prev + 1, currentEntries.length - 1));
+        }
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          setSelectedIndex(prev => Math.max(prev - 1, 0));
+        }
+        
+        // j/l navigation (10 at a time) - YouTube style
+        if (e.key === 'l' && !e.metaKey && !e.ctrlKey) {
+          e.preventDefault();
+          setSelectedIndex(prev => Math.min(prev + 10, currentEntries.length - 1));
+        }
+        if (e.key === 'j' && !e.metaKey && !e.ctrlKey) {
+          e.preventDefault();
+          setSelectedIndex(prev => Math.max(prev - 10, 0));
+        }
+        
+        // k or Enter to open link
+        if ((e.key === 'k' || e.key === 'Enter') && selectedIndex >= 0 && selectedIndex < currentEntries.length) {
+          e.preventDefault();
+          const entry = currentEntries[selectedIndex];
+          if (entry?.url) {
+            window.open(entry.url, '_blank');
+          }
+        }
+        
+        // r for random mode toggle
+        if (e.key === 'r' && !e.metaKey && !e.ctrlKey) {
+          e.preventDefault();
+          setSearchTerm('');
+          searchInputRef.current.value = '';
+          setShowRandom(prev => !prev);
+          setSelectedIndex(0); // Reset selection
+        }
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeTab, selectedIndex, nonSpecialEntries, mlEntries, arxivEntries]);
   
   return (
     <div className="min-h-screen text-gray-100 flex flex-col" style={{ backgroundColor: "rgb(12, 10, 9)", backgroundAttachment: "fixed" }}>
@@ -366,21 +432,60 @@ export function Entries() {
               <TabsContent value="links" className="space-y-0 divide-[#222]">
                 {nonSpecialEntries.length === 0 ? 
                   <p className="text-gray-400 text-center py-8">No links found</p> : 
-                  nonSpecialEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+                  nonSpecialEntries.map((entry, index) => (
+                    <Entry 
+                      key={index} 
+                      title={entry.title} 
+                      created={entry.date || ''} 
+                      link={entry.url}
+                      isSelected={activeTab === 'links' && selectedIndex === index}
+                      onRef={el => {
+                        if (activeTab === 'links' && selectedIndex === index && el) {
+                          el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                      }}
+                    />
+                  ))
                 }
               </TabsContent>
               
               <TabsContent value="ml" className="space-y-0 divide-[#222]">
                 {mlEntries.length === 0 ? 
                   <p className="text-gray-400 text-center py-8">No ML-related content found</p> : 
-                  mlEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+                  mlEntries.map((entry, index) => (
+                    <Entry 
+                      key={index} 
+                      title={entry.title} 
+                      created={entry.date || ''} 
+                      link={entry.url}
+                      isSelected={activeTab === 'ml' && selectedIndex === index}
+                      onRef={el => {
+                        if (activeTab === 'ml' && selectedIndex === index && el) {
+                          el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                      }}
+                    />
+                  ))
                 }
               </TabsContent>
               
               <TabsContent value="arxiv" className="space-y-0 divide-[#222]">
                 {arxivEntries.length === 0 ? 
                   <p className="text-gray-400 text-center py-8">No arxiv papers found</p> : 
-                  arxivEntries.map((entry, index) => <Entry key={index} title={entry.title} created={entry.date || ''} link={entry.url} />)
+                  arxivEntries.map((entry, index) => (
+                    <Entry 
+                      key={index} 
+                      title={entry.title} 
+                      created={entry.date || ''} 
+                      link={entry.url}
+                      isSelected={activeTab === 'arxiv' && selectedIndex === index}
+                      onRef={el => {
+                        if (activeTab === 'arxiv' && selectedIndex === index && el) {
+                          el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        }
+                      }}
+                    />
+                  ))
                 }
               </TabsContent>
             </Tabs>
