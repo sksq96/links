@@ -87,37 +87,45 @@ export function Entries() {
       
       // Fetch all pages to get all records
       while (hasMore) {
+        const limit = 500;
+        const offset = (page - 1) * limit;
+        
         const params = {
-          page: page,
-          perPage: 500, // Max per page
-          sort: '-ogdate', // Sort by original date descending
+          limit,
+          offset,
+          order: 'ogdate.desc.nullslast,created_at.desc'
         };
         
-        // Add search filter if term is provided (only for first request)
-        if (term && page === 1) {
-          // PocketBase filter syntax for searching in title or link fields
-          params.filter = `(title ~ "${term}" || link ~ "${term}")`;
+        // Add search filter if term is provided
+        if (term) {
+          params.or = `title.ilike.*${term}*,link.ilike.*${term}*`;
         }
         
-        const { data } = await axios.get('https://pb.voidterminal.app/api/collections/links/records', { params });
+        const { data } = await axios.get(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/links`, { 
+          params,
+          headers: {
+            'apikey': process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`
+          }
+        });
         
-        allItems = [...allItems, ...data.items];
+        allItems = [...allItems, ...data];
         
         // Check if there are more pages
-        hasMore = data.page < data.totalPages;
+        hasMore = data.length === limit;
         page++;
         
-        // If searching, don't paginate (PocketBase will return filtered results)
+        // If searching, don't paginate
         if (term) {
           hasMore = false;
         }
       }
       
-      // Transform PocketBase response to match expected format
+      // Transform Supabase response to match expected format
       const transformedData = allItems.map(item => ({
         url: item.link,
         title: item.title || item.link, // Use link as title if title is empty
-        date: item.ogdate || item.created // Use ogdate if available, fallback to created
+        date: item.ogdate || item.created_at // Use ogdate if available, fallback to created_at
       }));
       
       console.log(`API returned ${transformedData.length} total records for term: "${term}"`);
@@ -163,7 +171,29 @@ export function Entries() {
   
   const suggestedSearches = useMemo(() => {
     const suggestions = new Set();
-    const commonWords = new Set(['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'been', 'have', 'has', 'had', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'can', 'does', 'did', 'https', 'http', 'www', 'com']);
+    const phrases = new Set();
+    
+    // Expanded list of common words to filter out
+    const commonWords = new Set([
+      'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from', 'as', 'is', 'was', 'are', 'been', 
+      'have', 'has', 'had', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'can', 'does', 'did', 'https', 'http', 'www', 'com',
+      'be', 'being', 'do', 'doing', 'go', 'going', 'make', 'making', 'know', 'knowing', 'think', 'thinking', 'see', 'seeing', 'come', 'coming',
+      'want', 'use', 'using', 'find', 'finding', 'give', 'giving', 'tell', 'telling', 'work', 'working', 'call', 'calling', 'try', 'trying',
+      'need', 'needing', 'feel', 'feeling', 'become', 'becoming', 'leave', 'leaving', 'put', 'putting', 'mean', 'meaning', 'keep', 'keeping',
+      'let', 'letting', 'begin', 'beginning', 'seem', 'seeming', 'help', 'helping', 'show', 'showing', 'hear', 'hearing', 'play', 'playing',
+      'run', 'running', 'move', 'moving', 'live', 'living', 'believe', 'believing', 'bring', 'bringing', 'happen', 'happening', 'write', 'writing',
+      'provide', 'providing', 'sit', 'sitting', 'stand', 'standing', 'lose', 'losing', 'pay', 'paying', 'meet', 'meeting', 'include', 'including',
+      'continue', 'continuing', 'set', 'setting', 'learn', 'learning', 'change', 'changing', 'lead', 'leading', 'understand', 'understanding',
+      'watch', 'watching', 'follow', 'following', 'stop', 'stopping', 'create', 'creating', 'speak', 'speaking', 'read', 'reading',
+      'that', 'this', 'these', 'those', 'what', 'which', 'who', 'whom', 'whose', 'where', 'when', 'why', 'how',
+      'all', 'some', 'no', 'not', 'any', 'more', 'most', 'other', 'another', 'much', 'many', 'such', 'own', 'same',
+      'so', 'than', 'too', 'very', 'just', 'only', 'quite', 'then', 'now', 'also', 'well', 'even', 'still', 'yet', 'already',
+      'it', 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'you', 'your', 'yours', 'yourself', 'yourselves',
+      'he', 'him', 'his', 'himself', 'she', 'her', 'hers', 'herself', 'we', 'us', 'our', 'ours', 'ourselves',
+      'part', 'get', 'got', 'getting', 'new', 'good', 'best', 'better', 'old', 'right', 'big', 'small', 'large', 'great',
+      'about', 'into', 'over', 'after', 'under', 'again', 'between', 'through', 'during', 'before', 'above', 'below',
+      'org', 'net', 'edu', 'gov', 'pdf', 'html', 'github', 'youtube'
+    ]);
     
     // Sample from all entries, not just visible ones
     const sampleSize = Math.min(entries.length, 100);
@@ -172,17 +202,38 @@ export function Entries() {
       .slice(0, sampleSize);
     
     sampledEntries.forEach(entry => {
-      const words = entry.title.toLowerCase().split(/[\s\-_\/]+/);
+      const title = entry.title.toLowerCase();
+      
+      // Extract phrases (2-3 word combinations)
+      const words = title.split(/[\s\-_\/]+/).filter(w => w.length > 2);
+      
+      // Get 2-word phrases
+      for (let i = 0; i < words.length - 1; i++) {
+        const phrase = `${words[i]} ${words[i + 1]}`;
+        const phraseWords = phrase.split(' ');
+        
+        // Check if phrase contains at least one meaningful word
+        if (phraseWords.some(w => w.length > 3 && !commonWords.has(w))) {
+          phrases.add(phrase);
+        }
+      }
+      
+      // Get single meaningful words
       words.forEach(word => {
         const cleaned = word.replace(/[^a-z0-9]/g, '');
-        if (cleaned.length > 3 && !commonWords.has(cleaned) && !cleaned.match(/^\d+$/)) {
+        if (cleaned.length > 4 && !commonWords.has(cleaned) && !cleaned.match(/^\d+$/)) {
           suggestions.add(cleaned);
         }
       });
     });
     
-    // Get more suggestions and rotate through them
-    const allSuggestions = Array.from(suggestions);
+    // Combine phrases and single words
+    const allSuggestions = [
+      ...Array.from(phrases).slice(0, 20),  // Limit phrases
+      ...Array.from(suggestions).slice(0, 20)  // Limit single words
+    ].sort(() => Math.random() - 0.5);  // Shuffle
+    
+    // Get rotating subset
     const startIdx = suggestionIndex % Math.max(1, allSuggestions.length - 5);
     return allSuggestions.slice(startIdx, startIdx + 5);
   }, [entries, suggestionIndex]);

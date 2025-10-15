@@ -3,5 +3,5 @@
 
 cd "$(dirname "$0")"
 echo "🔄 Syncing emails to PocketBase..."
-python scripts/sync_emails_to_pb_simple.py 1
+python scripts/sync_emails_to_pb_simple.py 10
 echo "✅ Sync complete!"
